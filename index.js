@@ -15,7 +15,7 @@ bot.once("ready", () => {
 bot.login(TOKEN.token); // logs in with the token
 
 bot.on("message", (message) => {
-  if (message.content.startsWith(`${TOKEN.prefix}help`)) {
+  if (message.content.toLowerCase().startsWith(`${TOKEN.prefix}help`)) {
     message.channel.send(
       "Commands: !play followed by a youtube URL to play a song, !hello \n Special Messages: DadBot, LanguageChecker"
     );
@@ -23,7 +23,7 @@ bot.on("message", (message) => {
 });
 
 bot.on("message", (message) => {
-  if (message.content.startsWith(`${TOKEN.prefix}hello`)) {
+  if (message.content.toLowerCase().startsWith(`${TOKEN.prefix}hello`)) {
     message.channel.send("Hello, I am Arnold Bot!");
   }
 });
