@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const TOKEN = require("./../config.json");
+const KEYWORDS = require("./message-check.json");
 const bot = new Discord.Client();
 
 bot.once("ready", () => {
@@ -9,25 +10,27 @@ bot.once("ready", () => {
 bot.login(TOKEN.token); // logs in with the token
 
 bot.on("message", (message) => {
-  if (!message.author.bot) {
-    if (checkMessage(message)) {
-      kite = message.content.toString();
-      temp = kite.split(" ");
+  if (message.author.bot) return;
 
-      let dog = (string = []);
-      for (i = 0; i < temp.length; i++) {
-        if (temp[i] == "im" || temp[i] == "i'm") {
-          for (j = i + 1; j < temp.length; j++) {
-            dog[j] = temp[j];
-          }
-        }
-      }
-      message.channel.send(`Hi${dog.join(" ")}, I'm Arnold Bot.`);
-    }
-  }
+  let words = message.content.toString().split(" ");
+  findAndSend(words, message);
 });
 
-function checkMessage(message) {
-  if (message.content.includes(`im `) || message.content.includes(`i'm `))
-    return true;
+function findAndSend(words, message) {
+  let result = "";
+  let keywordCheck = -1;
+  let keywordSpot = 0;
+
+  for (i = 0; i < words.length && keywordCheck < 0; i++) {
+    keywordCheck = KEYWORDS.dadCheck.indexOf(words[i]);
+    keywordSpot = i;
+  }
+
+  for (i = keywordSpot + 1; i < words.length; i++) {
+    result += ` ${words[i]}`;
+  }
+
+  if (keywordCheck >= 0) {
+    message.channel.send(`Hi${result}, I'm Arnold Bot!`);
+  }
 }
