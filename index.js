@@ -17,13 +17,31 @@ bot.login(TOKEN.token); // logs in with the token
 bot.on("message", (message) => {
   if (message.content.toLowerCase().startsWith(`${TOKEN.prefix}help`)) {
     message.channel.send(
-      "Commands: !play followed by a youtube URL to play a song, !hello \n Special Messages: DadBot, LanguageChecker"
+      `Commands: 
+      !song, !hello
+      
+      Special Messages: 
+      DadBot, LanguageChecker`
+    );
+  }
+});
+
+bot.on("message", (message) => {
+  if (message.content.toLowerCase().startsWith(`${TOKEN.prefix}song`)) {
+    message.channel.send(
+      `Song Commands: 
+      !play - plays a youtube link as a song 
+      !skip - skips current song 
+      !pause - pauses current song 
+      !resume - resumes song from pause
+      !reset - fixes queue if song is not playing
+      !stop - clears queue and disconnects bot`
     );
   }
 });
 
 bot.on("message", (message) => {
   if (message.content.toLowerCase().startsWith(`${TOKEN.prefix}hello`)) {
-    message.channel.send("Hello, I am Arnold Bot!");
+    message.channel.send(`Hello, I am Arnold Bot!`);
   }
 });

@@ -14,7 +14,7 @@ bot.on("message", (message) => {
   for (i = 0; i < KEYWORDS.badWords.length; i++) {
     if (message.content.includes(KEYWORDS.badWords[i])) {
       message.channel.send(
-        `I'm watching you ${message.author.username}, do you want a spanking?`
+        `I'm watching you <@${message.author.id}>, do you want a spanking?`
       );
     }
   }
@@ -26,7 +26,7 @@ bot.on("message", (message) => {
     if (message.content.includes(KEYWORDS.bannedWords[i])) {
       message.delete();
       message.channel.send(
-        `Sorry ${message.author.username}, you cant say that word here. Don't worry though, I already removed your message!`
+        `Sorry <@${message.author.username}>, you cant say that word here. Don't worry though, I already removed your message!`
       );
     }
   }
