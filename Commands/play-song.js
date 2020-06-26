@@ -14,7 +14,9 @@ bot.login(TOKEN.token); // logs in with the token
 
 // This function is provoced when !play is commanded and the bot will play a youtube link in the voice channel
 bot.on("message", (message) => {
+  if (message.author.bot) return;
   let args = message.content.substring(TOKEN.prefix.length).split(" ");
+  if (message.content.indexOf(TOKEN.prefix) !== 0) return;
 
   switch (args[0]) {
     case "play":
@@ -58,7 +60,10 @@ bot.on("message", (message) => {
         server.dispatcher.on("finish", function () {
           server.queue.shift();
           if (server.queue[0]) play(connection, message);
-          else server.queue.push(args[1]);
+          else {
+            server.queue.push(args[1]);
+            server.queue.shift();
+          }
         });
       }
 

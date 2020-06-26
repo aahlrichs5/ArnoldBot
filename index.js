@@ -3,6 +3,7 @@ const TOKEN = require("./config.json");
 const playSong = require("./Commands/play-song");
 const dadBot = require("./Messages/dad-reply");
 const badWord = require("./Messages/bad-word");
+const gifReply = require("./Messages/gif-reply");
 const bot = new Discord.Client();
 
 // Logging when bot is online
@@ -20,7 +21,7 @@ bot.on("message", (message) => {
       `Commands: 
       !song, !hello
       
-      Special Messages: 
+    Special Messages: 
       DadBot, LanguageChecker`
     );
   }
