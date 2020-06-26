@@ -20,28 +20,37 @@ bot.on("message", (message) => {
     message.channel.send("Provide what type of gif you would like me to send.");
     return;
   }
-  if (args[0].localeCompare("gif") === 0) replyWithGif(args[1], message);
+  var gifString = "";
+  for (var i = 1; i < args.length; i++) {
+    gifString += args[i].toString();
+  }
+  if (args[0].localeCompare("gif") === 0) replyWithGif(gifString, message);
 });
 
 async function replyWithGif(content, message) {
-  const file = await getGifFromAPI(content);
-  // console.log(file);
-
-  //   var requestGif = JSON.parse(file);
-  //   console.log(requestGif);
+  try {
+    const gif = await getGifFromAPI(content, message);
+    message.channel.send(`Here is your gif <@${message.author.id}>. \n ${gif}`);
+  } catch (error) {
+    message.channel.send(
+      `I couldn't find a gif with that keyword <@${message.author.id}>.`
+    );
+  }
 }
 
-async function getGifFromAPI(content) {
-  return await fetch(
-    `https://api.tenor.com/v1/search?q=${content}&key=${TOKEN.tenorKey}&limit=1`
+async function getGifFromAPI(content, messaage) {
+  await fetch(
+    `https://api.tenor.com/v1/search?q=${content}&key=${TOKEN.tenorKey}&limit=${TOKEN.tenorLimit}`
   )
     .then(function (resp) {
       return resp.json();
     })
     .then(function (data) {
-      // console.log(data);
       gifUrl = data.results;
-      console.log(Object.getOwnPropertyNames(gifUrl));
-      console.log(gifUrl);
+    })
+    .catch((error) => {
+      console.log(error);
     });
+  var randomNum = Math.floor(Math.random() * gifUrl.length);
+  return gifUrl[randomNum].itemurl;
 }
