@@ -17,7 +17,7 @@ bot.on("message", (message) => {
   if (message.author.bot) return;
   if (message.content.indexOf(TOKEN.prefix) !== 0) return;
   let args = message.content.substring(TOKEN.prefix.length).split(" ");
-  if (args[0].toLowerCase() != "gif") return;
+  if (args[0].toLowerCase() != KEYWORDS.gifCheck) return;
 
   // Makes sure a keyword was provided
   if (args[1] === undefined) {
