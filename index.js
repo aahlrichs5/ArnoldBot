@@ -4,6 +4,7 @@ const playSong = require("./Commands/play-song");
 const dadBot = require("./Messages/dad-reply");
 const badWord = require("./Messages/bad-word");
 const gifReply = require("./Messages/gif-reply");
+const userInfoReply = require("./Messages/user-info-reply");
 const bot = new Discord.Client();
 
 // Logging when bot is online
