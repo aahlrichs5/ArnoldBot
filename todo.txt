@@ -5,5 +5,5 @@ Fix song errors when bot has not connected to a voice channel since boot
 Bot online 24/7
 
 Fetch something from an API?
-    - gifs on command
     - Riot API
+    - User Info
