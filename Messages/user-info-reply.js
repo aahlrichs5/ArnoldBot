@@ -24,11 +24,14 @@ bot.on("message", (message) => {
       "https://github.com/aahlrichs5/ArnoldBot"
     )
     .setColor("#ff0070")
-    .setTitle(`${message.author.username}`)
+    .setTitle(`${message.author.tag}`)
     .setThumbnail(`${message.author.avatarURL()}`)
     .addFields(
       { name: "ID", value: `${message.author.id}` },
-      { name: "Created On", value: `${message.author.createdAt}` }
+      {
+        name: "Created On",
+        value: `${message.author.createdAt}`,
+      }
     );
 
   message.channel.send(messageEmbed);
