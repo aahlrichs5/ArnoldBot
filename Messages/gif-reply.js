@@ -37,10 +37,12 @@ bot.on("message", (message) => {
 async function replyWithGif(content, message) {
   try {
     const gif = await getGifFromAPI(content, message);
-    message.channel.send(`Here is your gif <@${message.author.id}>. \n ${gif}`);
+    message.channel.send(
+      `Here is your gif ${message.author.username}. \n ${gif}`
+    );
   } catch (error) {
     message.channel.send(
-      `I couldn't find a gif with that keyword <@${message.author.id}>.`
+      `I couldn't find a gif with that keyword ${message.author.username}.`
     );
   }
 }

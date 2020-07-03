@@ -17,5 +17,19 @@ bot.on("message", (message) => {
   let args = message.content.substring(TOKEN.prefix.length).split(" ");
   if (args[0].toLowerCase() != KEYWORDS.userCheck) return;
 
-  message.channel.send("hello");
+  const messageEmbed = new Discord.MessageEmbed()
+    .setAuthor(
+      "ArnoldBot",
+      "https://i.imgur.com/Dotbc16.png",
+      "https://github.com/aahlrichs5/ArnoldBot"
+    )
+    .setColor("#ff0070")
+    .setTitle(`${message.author.username}`)
+    .setThumbnail(`${message.author.avatarURL()}`)
+    .addFields(
+      { name: "ID", value: `${message.author.id}` },
+      { name: "Created On", value: `${message.author.createdAt}` }
+    );
+
+  message.channel.send(messageEmbed);
 });

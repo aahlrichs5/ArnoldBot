@@ -19,15 +19,21 @@ bot.login(TOKEN.token); // logs in with the token
 bot.on("message", (message) => {
   if (message.content.toLowerCase().startsWith(`${TOKEN.prefix}help`)) {
     const embedMessage = new Discord.MessageEmbed()
+      .setAuthor(
+        "ArnoldBot",
+        "https://i.imgur.com/Dotbc16.png",
+        "https://github.com/aahlrichs5/ArnoldBot"
+      )
       .setColor("#ff0070")
-      .setTitle("Help Guide:", )
+      .setTitle("ArnoldBot Help:")
+      .setThumbnail("https://i.imgur.com/Dotbc16.png")
       .addFields(
         { name: "!hello", value: "I'll send a greeting" },
         {
           name: "!gif",
           value: "I'll send a gif of the keyword following the command",
         },
-        { name: "!user", value: "I send info about your discord account" },
+        { name: "!user", value: "I'll send info about your discord account" },
         {
           name: "!play",
           value: "I'll play a song of a provided youtube link",
@@ -46,20 +52,6 @@ bot.on("message", (message) => {
         { name: "languageFilterBot", value: "Watch your profanity" }
       );
     message.channel.send(embedMessage);
-  }
-});
-
-bot.on("message", (message) => {
-  if (message.content.toLowerCase().startsWith(`${TOKEN.prefix}song`)) {
-    message.channel.send(
-      `Song Commands: 
-      !play - plays a youtube link as a song 
-      !skip - skips current song 
-      !pause - pauses current song 
-      !resume - resumes song from pause
-      !reset - fixes queue if song is not playing
-      !stop - clears queue and disconnects bot`
-    );
   }
 });
 
