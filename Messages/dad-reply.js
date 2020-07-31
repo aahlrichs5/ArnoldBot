@@ -12,14 +12,14 @@ bot.login(TOKEN.token); // logs in with the token
 bot.on("message", (message) => {
   if (message.author.bot) return;
 
-  let words = message.content.toString().split(" ");
+  var words = message.content.toString().split(" ");
   findAndSend(words, message);
 });
 
 function findAndSend(words, message) {
-  let result = "";
-  let keywordCheck = -1;
-  let keywordSpot = 0;
+  var result = "";
+  var keywordCheck = -1;
+  var keywordSpot = 0;
 
   for (i = 0; i < words.length && keywordCheck < 0; i++) {
     keywordCheck = KEYWORDS.dadCheck.indexOf(words[i]);

@@ -7,3 +7,4 @@ Bot online 24/7
 Fetch something from an API?
     - Riot API
     - User Info
+        - Expansion on this

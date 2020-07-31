@@ -14,7 +14,7 @@ bot.on("message", (message) => {
   // Checks for valid gif input
   if (message.author.bot) return;
   if (message.content.indexOf(TOKEN.prefix) !== 0) return;
-  let args = message.content.substring(TOKEN.prefix.length).split(" ");
+  var args = message.content.substring(TOKEN.prefix.length).split(" ");
   if (args[0].toLowerCase() != KEYWORDS.userCheck) return;
 
   const messageEmbed = new Discord.MessageEmbed()

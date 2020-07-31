@@ -33,9 +33,7 @@ bot.on("message", (message) => {
           name: "!gif",
           value: "I'll send a gif of the keyword following the command",
         },
-        { name: "!user", value: "I'll send info about your discord account" },
-        { name: "dadBot", value: "I'm a dad, but I have no kids..." },
-        { name: "languageFilterBot", value: "Watch your profanity" }
+        { name: "!user", value: "I'll send info about your discord account" }
       );
     message.channel.send(embedMessage);
   }

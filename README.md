@@ -9,7 +9,7 @@ adding new features that will be listed here when complete.
 
 !help, states commands to be entered by users <br />
 !hello, the bot gives a greeting message <br />
-!play, plays the youtube URL following this command in the voice channel of the user <br />
+!user, gives some information about the user's discord account <br />
 
 # Automatic Functions:
 
