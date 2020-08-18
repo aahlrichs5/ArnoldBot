@@ -27,7 +27,6 @@ bot.on("message", (message) => {
     .setTitle(`${message.author.tag}`)
     .setThumbnail(`${message.author.avatarURL()}`)
     .addFields(
-      { name: "ID", value: `${message.author.id}` },
       {
         name: "Created On",
         value: `${message.author.createdAt}`,
