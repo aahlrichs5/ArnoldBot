@@ -4,3 +4,5 @@ package.json
 package-lock.json
 ArnoldBot.bat
 message-check.json
+.xml
+.iml
