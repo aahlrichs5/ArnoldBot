@@ -1,8 +1,7 @@
 This file is a list of things that I will be doing/fixing
 
-Fix song errors when bot has not connected to a voice channel since boot
-
 Bot online 24/7
+Website with info
 
 Fetch something from an API?
     - Riot API

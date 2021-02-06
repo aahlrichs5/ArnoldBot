@@ -4,8 +4,6 @@ const KEYWORDS = require("./message-check.json");
 const fetch = require("node-fetch");
 const bot = new Discord.Client();
 
-const gameVersion = "10.16.1";
-
 bot.once("ready", () => {
   console.log("Ready RiotAPI");
 });
@@ -22,16 +20,12 @@ bot.on("message", (message) => {
     if (i === args.length - 1) summonerName += args[i].toString();
     else summonerName += args[i].toString() + " ";
   }
+  if (summonerName == "" && args[0].toLocaleLowerCase() !== KEYWORDS.leagueVersion) return;
   checkLeagueMessage(args[0].toLocaleLowerCase(), summonerName, message);
 });
 
 async function checkLeagueMessage(keyword, summonerName, message) {
-  if (summonerName == "") return;
   switch (keyword) {
-    // TODO fix profile
-    case KEYWORDS.leagueProfile:
-      const summonerID = await fetchSummonerID(summonerName, message);
-      break;
     case KEYWORDS.leagueLevel:
       await fetchSummonerLevel(summonerName, message);
       break;
@@ -39,26 +33,34 @@ async function checkLeagueMessage(keyword, summonerName, message) {
     case KEYWORDS.leagueRank:
       const summonerRank = await fetchSummonerRank(summonerName, message);
       break;
+    case KEYWORDS.leagueVersion:
+      const gameVersion = await fetchGameVersion(message);
+      message.channel.send(`League of Legends is on patch ${gameVersion}`)
+      break;
+    case KEYWORDS.champMastery:
+      const champID = await fetchChampionID("Zoe");
+      break;
   }
 }
 
-async function fetchSummonerID(summonerName, message) {
+
+async function fetchGameVersion() {
   try {
     await fetch(
-      `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}/?api_key=${TOKEN.riotKey}`
+      `https://ddragon.leagueoflegends.com/api/versions.json`
     )
       .then(function (resp) {
         return resp.json();
       })
       .then(function (data) {
-        summonerID = data;
+        version = data;
       })
       .catch((error) => {
         console.log(error);
       });
-    return summonerID;
+    return version[0];
   } catch (error) {
-    message.channel.send("Error: Cannot find summoner name.");
+    message.channel.send("Error finding game version for league of legends.");
   }
 }
 
@@ -86,9 +88,32 @@ async function fetchSummonerLevel(summonerName, message) {
   }
 }
 
+async function fetchSummonerID(summonerName) {
+  try {
+    await fetch(
+      `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}/?api_key=${TOKEN.riotKey}`
+    )
+      .then(function (resp) {
+        return resp.json();
+      })
+      .then(function (data) {
+        summonerID = data.id;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      console.log(summonerID);
+    return summonerID;
+  } catch (error) {
+    console.log("Can't find summoner ID")
+  }
+}
+
 async function fetchRank(summonerID) {}
 
-async function getChampionID() {
+async function fetchChampionID(championName) {
+  gameVersion = await fetchGameVersion();
+  console.log(gameVersion);
   try {
     await fetch(
       `http://ddragon.leagueoflegends.com/cdn/${gameVersion}/data/en_US/champion.json`
@@ -97,12 +122,12 @@ async function getChampionID() {
         return resp.json();
       })
       .then(function (data) {
-        champID = data;
+        champData = data;
       })
       .catch((error) => {
         console.log(error);
       });
-    console.log(champID);
+    console.log(champData);
   } catch (error) {
     console.log(error);
   }
