@@ -30,6 +30,9 @@ bot.on("message", (message) => {
       message.channel.send(
         `Sorry <@${message.author.id}>, you cant say that word here. Don't worry though, I already removed your message!`
       );
+
+      //logs to the mod log channel
+      bot.channels.cache.get("846868428664340540").send(`@everyone, <@${message.author.id}> said ${message.content}, I deleted this message.`);
     }
   }
 });
