@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const TOKEN = require("./../config.json");
+const TOKEN = require("../config.json");
 const KEYWORDS = require("./message-check.json");
 const fetch = require("node-fetch");
 const bot = new Discord.Client();
@@ -38,11 +38,32 @@ async function checkLeagueMessage(keyword, summonerName, message) {
       message.channel.send(`League of Legends is on patch ${gameVersion}`)
       break;
     case KEYWORDS.champMastery:
-      const champID = await fetchChampionID("Zoe");
+      const champID = await fetchChampionID(summonerName);
       break;
   }
 }
 
+async function fetchChampionID(championName) {
+  gameVersion = await fetchGameVersion();
+  var result = [];
+  try {
+    await fetch(
+      `http://ddragon.leagueoflegends.com/cdn/${gameVersion}/data/en_US/champion.json`
+    )
+      .then(function (resp) {
+        return resp.json();
+      })
+      .then(function (data) {
+        champData = data.data[championName].key;
+        allData = data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 async function fetchGameVersion() {
   try {
@@ -110,25 +131,3 @@ async function fetchSummonerID(summonerName) {
 }
 
 async function fetchRank(summonerID) {}
-
-async function fetchChampionID(championName) {
-  gameVersion = await fetchGameVersion();
-  console.log(gameVersion);
-  try {
-    await fetch(
-      `http://ddragon.leagueoflegends.com/cdn/${gameVersion}/data/en_US/champion.json`
-    )
-      .then(function (resp) {
-        return resp.json();
-      })
-      .then(function (data) {
-        champData = data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    console.log(champData);
-  } catch (error) {
-    console.log(error);
-  }
-}

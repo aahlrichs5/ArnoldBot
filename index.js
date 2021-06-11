@@ -1,10 +1,10 @@
 const Discord = require("discord.js");
 const TOKEN = require("./config.json");
-const dadBot = require("./Messages/dad-reply");
-const badWord = require("./Messages/bad-word");
-const gifReply = require("./Messages/gif-reply");
-const userInfoReply = require("./Messages/user-info-reply");
-const riotAPI = require("./Messages/riot-api");
+const dadBot = require("./src/dad-reply");
+const badWord = require("./src/bad-word");
+const gifReply = require("./src/gif-reply");
+const userInfoReply = require("./src/user-info-reply");
+const riotAPI = require("./src/riot-api");
 const bot = new Discord.Client();
 
 // Logging when bot is online
