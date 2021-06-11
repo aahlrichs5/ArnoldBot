@@ -5,5 +5,9 @@ Website with info
 
 Fetch something from an API?
     - Riot API
+        - Top 3 Champs
+        - Match champ name to champ ID
     - User Info
         - Expansion on this
+    - Twitch API
+    - Youtube API
