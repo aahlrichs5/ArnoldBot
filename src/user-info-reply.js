@@ -26,12 +26,10 @@ bot.on("message", (message) => {
     .setColor("#ff0070")
     .setTitle(`${message.author.tag}`)
     .setThumbnail(`${message.author.avatarURL()}`)
-    .addFields(
-      {
-        name: "Created On",
-        value: `${message.author.createdAt}`,
-      }
-    );
+    .addFields({
+      name: "Created On",
+      value: `${message.author.createdAt}`,
+    });
 
   message.channel.send(messageEmbed);
 });

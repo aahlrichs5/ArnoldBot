@@ -20,7 +20,11 @@ bot.on("message", (message) => {
     if (i === args.length - 1) summonerName += args[i].toString();
     else summonerName += args[i].toString() + " ";
   }
-  if (summonerName == "" && args[0].toLocaleLowerCase() !== KEYWORDS.leagueVersion) return;
+  if (
+    summonerName == "" &&
+    args[0].toLocaleLowerCase() !== KEYWORDS.leagueVersion
+  )
+    return;
   checkLeagueMessage(args[0].toLocaleLowerCase(), summonerName, message);
 });
 
@@ -35,7 +39,7 @@ async function checkLeagueMessage(keyword, summonerName, message) {
       break;
     case KEYWORDS.leagueVersion:
       const gameVersion = await fetchGameVersion(message);
-      message.channel.send(`League of Legends is on patch ${gameVersion}`)
+      message.channel.send(`League of Legends is on patch ${gameVersion}`);
       break;
     case KEYWORDS.champMastery:
       const champID = await fetchChampionID(summonerName);
@@ -67,9 +71,7 @@ async function fetchChampionID(championName) {
 
 async function fetchGameVersion() {
   try {
-    await fetch(
-      `https://ddragon.leagueoflegends.com/api/versions.json`
-    )
+    await fetch(`https://ddragon.leagueoflegends.com/api/versions.json`)
       .then(function (resp) {
         return resp.json();
       })
@@ -123,10 +125,10 @@ async function fetchSummonerID(summonerName) {
       .catch((error) => {
         console.log(error);
       });
-      console.log(summonerID);
+    console.log(summonerID);
     return summonerID;
   } catch (error) {
-    console.log("Can't find summoner ID")
+    console.log("Can't find summoner ID");
   }
 }
 

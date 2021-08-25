@@ -1,10 +1,11 @@
 const Discord = require("discord.js");
 const TOKEN = require("./config.json");
-const dadBot = require("./src/dad-reply");
 const badWord = require("./src/bad-word");
+const cartegraph = require("./src/cartegraph-api");
+const dadBot = require("./src/dad-reply");
 const gifReply = require("./src/gif-reply");
-const userInfoReply = require("./src/user-info-reply");
 const riotAPI = require("./src/riot-api");
+const userInfoReply = require("./src/user-info-reply");
 const bot = new Discord.Client();
 
 // Logging when bot is online
