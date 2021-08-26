@@ -58,6 +58,10 @@ async function processMessage(keyword, values, message) {
         message
       );
       break;
+    case KEYWORDS.newPavement:
+      if (cookie === "") await authenticateCarte();
+      createNewPavement(values, message);
+      break;
     case KEYWORDS.getTask:
       if (cookie === "") await authenticateCarte();
       getResourceByID(values, KEYWORDS.cgTasks, KEYWORDS.cgTasksClass, message);
@@ -81,6 +85,9 @@ async function processMessage(keyword, values, message) {
       break;
     case KEYWORDS.cgHelp:
       sendHelpEmbed(message);
+      break;
+    case KEYWORDS.cartegraph:
+      message.channel.send("https://imgur.com/a/8842IVk");
       break;
     default:
       message.channel.send(
@@ -114,8 +121,6 @@ async function authenticateCarte() {
 }
 
 async function getResourceByID(id, type, typeClass, message) {
-  const filter = `(([id] is equal to "${id}"))`;
-
   try {
     await fetch(`${url}/classes/${typeClass}?filter=${filter}`, {
       method: "GET",
@@ -131,6 +136,37 @@ async function getResourceByID(id, type, typeClass, message) {
           );
           return;
         }
+        sendEmbeddedMessage(data[Object.keys(data)[0]][0], type, message);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function createNewPavement(id, message) {
+  const type = KEYWORDS.cgPavement;
+  const typeClass = KEYWORDS.cgPavementClass;
+
+  try {
+    await fetch(`${url}/classes/${typeClass}`, {
+      method: "POST",
+      headers: { cgkey: cookie },
+      body: JSON.stringify({
+        cgPavementClass: [
+          {
+            IDField: id,
+          },
+        ],
+      }),
+    })
+      .then(function (resp) {
+        return resp.json();
+      })
+      .then(function (data) {
+        console.log(data);
         sendEmbeddedMessage(data[Object.keys(data)[0]][0], type, message);
       })
       .catch((error) => {
