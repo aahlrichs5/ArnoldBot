@@ -28,7 +28,6 @@ bot.on("message", (message) => {
 });
 
 async function processMessage(keyword, values, message) {
-  console.log(keyword, values, message.content);
   switch (keyword) {
     case KEYWORDS.authenticate:
       const verified = await authenticateCarte();
@@ -193,6 +192,31 @@ function sendEmbeddedMessage(data, type, message) {
     messageEmbed.addFields({
       name: "Last Modified On",
       value: `${data.cgLastModifiedField}`,
+    });
+  if (data.PavementClassificationField)
+    messageEmbed.addFields({
+      name: "Pavement Classification",
+      value: `${data.PavementClassificationField}`,
+    });
+  if (data.EstimatedOCIField)
+    messageEmbed.addFields({
+      name: "Estimated OCI",
+      value: `${data.EstimatedOCIField}`,
+    });
+  if (data.ActivityField)
+    messageEmbed.addFields({
+      name: "Task Type",
+      value: `${data.ActivityField}`,
+    });
+  if (data.cgAssetIDField)
+    messageEmbed.addFields({
+      name: "Asset ID",
+      value: `${data.cgAssetIDField}`,
+    });
+  if (data.cgAssetTypeField)
+    messageEmbed.addFields({
+      name: "Asset Type",
+      value: `${data.cgAssetTypeField}`,
     });
   if (data.TotalCostField)
     messageEmbed.addFields({
