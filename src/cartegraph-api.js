@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const fetch = require("node-fetch");
-const KEYWORDS = require("./message-check.json");
+const KEYWORDS = require("../cg-constants.json");
 const TOKEN = require("../config.json");
 const bot = new Discord.Client();
 
@@ -24,10 +24,23 @@ bot.on("message", (message) => {
     `${TOKEN.cgPrefix}` + args[0] + " ",
     ""
   );
+
   processMessage(args[0].toLocaleLowerCase(), values, message);
 });
 
 async function processMessage(keyword, values, message) {
+  if (keyword === KEYWORDS.cgHelp) {
+    sendHelpEmbed(message);
+    return;
+  }
+
+  if (!values) {
+    message.channel.send(
+      "Please retry and enter an ID following the Cartegraph command."
+    );
+    return;
+  }
+
   switch (keyword) {
     case KEYWORDS.authenticate:
       const verified = await authenticateCarte();
@@ -38,23 +51,33 @@ async function processMessage(keyword, values, message) {
       break;
     case KEYWORDS.getPavement:
       if (cookie === "") await authenticateCarte();
-      if (!values) {
-        message.channel.send(
-          "Please retry and enter an ID following the !getpavement command."
-        );
-        return;
-      }
-      getPavementByID(values, message);
+      getResourceByID(
+        values,
+        KEYWORDS.cgPavement,
+        KEYWORDS.cgPavementClass,
+        message
+      );
       break;
     case KEYWORDS.getTask:
       if (cookie === "") await authenticateCarte();
-      if (!values) {
-        message.channel.send(
-          "Please retry and enter an ID following the !gettask command."
-        );
-        return;
-      }
-      getTaskByID(values, message);
+      getResourceByID(values, KEYWORDS.cgTasks, KEYWORDS.cgTasksClass, message);
+      break;
+    case KEYWORDS.getFacilty:
+      if (cookie === "") await authenticateCarte();
+      getResourceByID(
+        values,
+        KEYWORDS.cgFacilities,
+        KEYWORDS.cgFacilitiesClass,
+        message
+      );
+      break;
+    case KEYWORDS.getPond:
+      if (cookie === "") await authenticateCarte();
+      getResourceByID(values, KEYWORDS.Pond, KEYWORDS.PondsClass, message);
+      break;
+    case KEYWORDS.getSign:
+      if (cookie === "") await authenticateCarte();
+      getResourceByID(values, KEYWORDS.cgSigns, KEYWORDS.cgSignsClass, message);
       break;
     case KEYWORDS.cgHelp:
       sendHelpEmbed(message);
@@ -90,43 +113,11 @@ async function authenticateCarte() {
   return true;
 }
 
-async function getPavementByID(id, message) {
+async function getResourceByID(id, type, typeClass, message) {
   const filter = `(([id] is equal to "${id}"))`;
-  try {
-    await fetch(`${url}/classes/cgPavementClass?filter=${filter}`, {
-      method: "GET",
-      headers: { cgkey: cookie },
-    })
-      .then(function (resp) {
-        return resp.json();
-      })
-      .then(function (data) {
-        if (data.Message) {
-          message.channel.send(
-            `Authentication required for Cartegraph's API access may have expired. Try typing "!auth" first.`
-          );
-          return;
-        }
-        if (data.cgPavementClass[0].IDField === undefined) {
-          message.channel.send(
-            "I couldn't find a pavement asset with that ID. Please try again with a valid ID."
-          );
-          return;
-        }
-        sendEmbeddedMessage(data.cgPavementClass[0], "Pavement", message);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  } catch (error) {
-    console.log(error);
-  }
-}
 
-async function getTaskByID(id, message) {
-  const filter = `(([id] is equal to "${id}"))`;
   try {
-    await fetch(`${url}/classes/cgTasksClass?filter=${filter}`, {
+    await fetch(`${url}/classes/${typeClass}?filter=${filter}`, {
       method: "GET",
       headers: { cgkey: cookie },
     })
@@ -134,19 +125,13 @@ async function getTaskByID(id, message) {
         return resp.json();
       })
       .then(function (data) {
-        if (data.Message) {
+        if (data[Object.keys(data)[0]][0] === undefined) {
           message.channel.send(
-            `Authentication required for Cartegraph's API access may have expired. Try typing "!auth" first.`
+            `I couldn't find a ${type} with that ID. Please try again with a valid ID.`
           );
           return;
         }
-        if (data.cgTasksClass[0].IDField === undefined) {
-          message.channel.send(
-            "I couldn't find a task with that ID. Please try again with a valid ID."
-          );
-          return;
-        }
-        sendEmbeddedMessage(data.cgTasksClass[0], "Task", message);
+        sendEmbeddedMessage(data[Object.keys(data)[0]][0], type, message);
       })
       .catch((error) => {
         console.log(error);
@@ -164,7 +149,7 @@ function sendEmbeddedMessage(data, type, message) {
       "https://www.cartegraph.com/"
     )
     .setColor("#f78f1e")
-    .setTitle(`${type}: ${data.IDField}`)
+    .setTitle(`${type} ID: ${data.IDField}`)
     .setThumbnail(
       `https://is1-ssl.mzstatic.com/image/thumb/Purple115/v4/1c/00/63/1c00639a-adef-aa09-f808-c567d7138cd6/AppIcon-1x_U007emarketing-0-7-0-85-220.png/400x400.png`
     );
@@ -173,6 +158,32 @@ function sendEmbeddedMessage(data, type, message) {
       name: "Oid",
       value: `${data.Oid}`,
     });
+
+  // Asset Fields
+  if (data.cgAssetIDField)
+    messageEmbed.addFields({
+      name: "Asset ID",
+      value: `${data.cgAssetIDField}`,
+    });
+  if (data.cgAssetTypeField)
+    messageEmbed.addFields({
+      name: "Asset Type",
+      value: `${data.cgAssetTypeField}`,
+    });
+  if (data.PavementClassificationField)
+    messageEmbed.addFields({
+      name: "Pavement Classification",
+      value: `${data.PavementClassificationField}`,
+    });
+
+  //Task Fields
+  if (data.ActivityField)
+    messageEmbed.addFields({
+      name: "Task Type",
+      value: `${data.ActivityField}`,
+    });
+
+  // Universal Fields
   if (data.EnteredByField)
     messageEmbed.addFields({
       name: "Entered By",
@@ -192,31 +203,6 @@ function sendEmbeddedMessage(data, type, message) {
     messageEmbed.addFields({
       name: "Last Modified On",
       value: `${data.cgLastModifiedField}`,
-    });
-  if (data.PavementClassificationField)
-    messageEmbed.addFields({
-      name: "Pavement Classification",
-      value: `${data.PavementClassificationField}`,
-    });
-  if (data.EstimatedOCIField)
-    messageEmbed.addFields({
-      name: "Estimated OCI",
-      value: `${data.EstimatedOCIField}`,
-    });
-  if (data.ActivityField)
-    messageEmbed.addFields({
-      name: "Task Type",
-      value: `${data.ActivityField}`,
-    });
-  if (data.cgAssetIDField)
-    messageEmbed.addFields({
-      name: "Asset ID",
-      value: `${data.cgAssetIDField}`,
-    });
-  if (data.cgAssetTypeField)
-    messageEmbed.addFields({
-      name: "Asset Type",
-      value: `${data.cgAssetTypeField}`,
     });
   if (data.TotalCostField)
     messageEmbed.addFields({
