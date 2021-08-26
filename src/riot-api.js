@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
-const TOKEN = require("../config.json");
-const KEYWORDS = require("./message-check.json");
 const fetch = require("node-fetch");
+const KEYWORDS = require("./message-check.json");
+const TOKEN = require("../config.json");
 const bot = new Discord.Client();
 
 bot.once("ready", () => {
