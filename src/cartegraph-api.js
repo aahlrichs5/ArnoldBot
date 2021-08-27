@@ -4,7 +4,8 @@ const KEYWORDS = require("../cg-constants.json");
 const TOKEN = require("../config.json");
 const bot = new Discord.Client();
 
-const url = "https://prodweb19-01.cartegraphoms.com/cobrakai/api/v1";
+// const url = "https://prodweb19-01.cartegraphoms.com/cobrakai/api/v1";
+const url = "https://geminiweb.cartegraph.com/cobrakai/api/v1";
 
 var cookie = "";
 
@@ -46,8 +47,13 @@ async function processMessage(keyword, values, message) {
       const verified = await authenticateCarte();
       if (verified)
         message.channel.send(
-          `Authenticated user ${TOKEN.carteAPI.username} on prodweb/cobrakai.`
+          `Authenticated user ${TOKEN.carteAPI.username} on ${url}.`
         );
+      else {
+        message.channel.send(
+          `Was unable to authenticate user ${TOKEN.carteAPI.username} on ${url}`
+        );
+      }
       break;
     case KEYWORDS.getPavement:
       if (cookie === "") await authenticateCarte();
@@ -60,11 +66,25 @@ async function processMessage(keyword, values, message) {
       break;
     case KEYWORDS.newPavement:
       if (cookie === "") await authenticateCarte();
-      createNewPavement(values, message);
+      createNewResource(
+        values,
+        KEYWORDS.cgPavement,
+        KEYWORDS.cgPavementClass,
+        message
+      );
       break;
     case KEYWORDS.getTask:
       if (cookie === "") await authenticateCarte();
       getResourceByID(values, KEYWORDS.cgTasks, KEYWORDS.cgTasksClass, message);
+      break;
+    case KEYWORDS.newTask:
+      if (cookie === "") await authenticateCarte();
+      createNewResource(
+        values,
+        KEYWORDS.cgTasks,
+        KEYWORDS.cgTasksClass,
+        message
+      );
       break;
     case KEYWORDS.getFacilty:
       if (cookie === "") await authenticateCarte();
@@ -75,13 +95,40 @@ async function processMessage(keyword, values, message) {
         message
       );
       break;
+    case KEYWORDS.newFacility:
+      if (cookie === "") await authenticateCarte();
+      createNewResource(
+        values,
+        KEYWORDS.cgFacilities,
+        KEYWORDS.cgFacilitiesClass,
+        message
+      );
+      break;
     case KEYWORDS.getPond:
       if (cookie === "") await authenticateCarte();
-      getResourceByID(values, KEYWORDS.Pond, KEYWORDS.PondsClass, message);
+      getResourceByID(values, KEYWORDS.cgPond, KEYWORDS.cgPondsClass, message);
+      break;
+    case KEYWORDS.newPond:
+      if (cookie === "") await authenticateCarte();
+      createNewResource(
+        values,
+        KEYWORDS.cgPond,
+        KEYWORDS.cgPondsClass,
+        message
+      );
       break;
     case KEYWORDS.getSign:
       if (cookie === "") await authenticateCarte();
       getResourceByID(values, KEYWORDS.cgSigns, KEYWORDS.cgSignsClass, message);
+      break;
+    case KEYWORDS.newSign:
+      if (cookie === "") await authenticateCarte();
+      createNewResource(
+        values,
+        KEYWORDS.cgSigns,
+        KEYWORDS.cgSignsClass,
+        message
+      );
       break;
     case KEYWORDS.cgHelp:
       sendHelpEmbed(message);
@@ -121,6 +168,8 @@ async function authenticateCarte() {
 }
 
 async function getResourceByID(id, type, typeClass, message) {
+  const filter = `(([id] is equal to "${id}"))`;
+
   try {
     await fetch(`${url}/classes/${typeClass}?filter=${filter}`, {
       method: "GET",
@@ -146,27 +195,37 @@ async function getResourceByID(id, type, typeClass, message) {
   }
 }
 
-async function createNewPavement(id, message) {
-  const type = KEYWORDS.cgPavement;
-  const typeClass = KEYWORDS.cgPavementClass;
+async function createNewResource(id, type, typeClass, message) {
+  var newResource;
+  if (type !== KEYWORDS.cgTasks) {
+    newResource = {
+      [typeClass]: [
+        {
+          IDField: id,
+        },
+      ],
+    };
+  } else {
+    newResource = {
+      [typeClass]: [
+        {
+          IDField: id,
+          ActivityField: "JustSomeWork",
+        },
+      ],
+    };
+  }
 
   try {
     await fetch(`${url}/classes/${typeClass}`, {
       method: "POST",
       headers: { cgkey: cookie },
-      body: JSON.stringify({
-        cgPavementClass: [
-          {
-            IDField: id,
-          },
-        ],
-      }),
+      body: JSON.stringify(newResource),
     })
       .then(function (resp) {
         return resp.json();
       })
       .then(function (data) {
-        console.log(data);
         sendEmbeddedMessage(data[Object.keys(data)[0]][0], type, message);
       })
       .catch((error) => {
@@ -180,9 +239,9 @@ async function createNewPavement(id, message) {
 function sendEmbeddedMessage(data, type, message) {
   const messageEmbed = new Discord.MessageEmbed()
     .setAuthor(
-      "Cartegraph.com",
+      "Cartegraph One",
       "https://is1-ssl.mzstatic.com/image/thumb/Purple115/v4/1c/00/63/1c00639a-adef-aa09-f808-c567d7138cd6/AppIcon-1x_U007emarketing-0-7-0-85-220.png/400x400.png",
-      "https://www.cartegraph.com/"
+      "https://develop.cartegraphdev.com/"
     )
     .setColor("#f78f1e")
     .setTitle(`${type} ID: ${data.IDField}`)
@@ -251,23 +310,35 @@ function sendEmbeddedMessage(data, type, message) {
 function sendHelpEmbed(message) {
   const messageEmbed = new Discord.MessageEmbed()
     .setAuthor(
-      "Cartegraph.com",
+      "Cartegraph One",
       "https://is1-ssl.mzstatic.com/image/thumb/Purple115/v4/1c/00/63/1c00639a-adef-aa09-f808-c567d7138cd6/AppIcon-1x_U007emarketing-0-7-0-85-220.png/400x400.png",
-      "https://www.cartegraph.com/"
+      "https://develop.cartegraphdev.com/"
     )
     .setColor("#f78f1e")
-    .setTitle(`Cartegraph Commands`)
+    .setTitle("Help & Commands")
     .setThumbnail(
       `https://is1-ssl.mzstatic.com/image/thumb/Purple115/v4/1c/00/63/1c00639a-adef-aa09-f808-c567d7138cd6/AppIcon-1x_U007emarketing-0-7-0-85-220.png/400x400.png`
     )
     .addFields(
       {
-        name: "~getPavement {id}",
-        value: "Find a pavement with the given ID.",
+        name: "Supported Assets",
+        value: `Pavement, Facility, Pond, and Sign.`,
+      },
+      {
+        name: "~get{asset} {id}",
+        value: `Find an existing asset with the given ID.`,
       },
       {
         name: "~getTask {id}",
         value: "Find a task with the given ID.",
+      },
+      {
+        name: "~new{asset} {id}",
+        value: `Create a new asset with the given ID.`,
+      },
+      {
+        name: "~newTask {id}",
+        value: "Create a new task with the given ID.",
       }
     );
   message.channel.send(messageEmbed);
