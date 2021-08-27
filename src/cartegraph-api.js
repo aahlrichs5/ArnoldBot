@@ -72,6 +72,9 @@ async function processMessage(keyword, values, message) {
         message
       );
       break;
+    case KEYWORDS.newInspection:
+      createNewInspection(values, message);
+      break;
     case KEYWORDS.getTask:
       getResourceByID(values, KEYWORDS.cgTasks, KEYWORDS.cgTasksClass, message);
       break;
@@ -227,7 +230,44 @@ async function createNewResource(id, type, typeClass, message) {
   }
 }
 
-async function createNewInspection(parentID, message) {}
+async function createNewInspection(parentID, message) {
+  const rand = Math.floor(100000 + Math.random() * 900000);
+
+  const newInspection = {
+    [KEYWORDS.cgTasksClass]: [
+      {
+        cgAssetIDField: parentID,
+        cgAssetTypeField: KEYWORDS.cgPavement,
+        cgAssetAndIdField: `${KEYWORDS.cgPavement} ${parentID}`,
+        IDField: rand,
+        ActivityField: "Inspect",
+      },
+    ],
+  };
+
+  try {
+    await fetch(`${url}/classes/${KEYWORDS.cgTasksClass}`, {
+      method: "POST",
+      headers: { cgkey: cookie },
+      body: JSON.stringify(newInspection),
+    })
+      .then(function (resp) {
+        return resp.json();
+      })
+      .then(function (data) {
+        sendEmbeddedMessage(
+          data[Object.keys(data)[0]][0],
+          KEYWORDS.cgTasks,
+          message
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 function sendEmbeddedMessage(data, type, message) {
   const messageEmbed = new Discord.MessageEmbed()
