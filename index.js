@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const Discord = require("discord.js");
 const TOKEN = require("./config.json");
 const badWord = require("./src/bad-word");

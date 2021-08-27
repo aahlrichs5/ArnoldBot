@@ -4,7 +4,7 @@ const KEYWORDS = require("./message-check.json");
 const TOKEN = require("../config.json");
 const bot = new Discord.Client();
 
-var gifUrl;
+let gifUrl;
 
 bot.once("ready", () => {
   console.log("Ready GifReply");
@@ -16,7 +16,7 @@ bot.on("message", (message) => {
   // Checks for valid gif input
   if (message.author.bot) return;
   if (message.content.indexOf(TOKEN.prefix) !== 0) return;
-  var args = message.content.substring(TOKEN.prefix.length).split(" ");
+  const args = message.content.substring(TOKEN.prefix.length).split(" ");
   if (args[0].toLowerCase() != KEYWORDS.gifCheck) return;
 
   // Makes sure a keyword was provided
@@ -26,8 +26,8 @@ bot.on("message", (message) => {
   }
 
   //puts the message into a string without the "!gif"
-  var gifString = "";
-  for (var i = 1; i < args.length; i++) {
+  let gifString = "";
+  for (let i = 1; i < args.length; i++) {
     if (i === args.length - 1) gifString += args[i].toString();
     else gifString += args[i].toString() + " ";
   }
@@ -36,7 +36,7 @@ bot.on("message", (message) => {
 
 async function replyWithGif(content, message) {
   try {
-    const gif = await getGifFromAPI(content, message);
+    const gif = await getGifFromAPI(content);
     message.channel.send(
       `Here is your gif ${message.author.username}. \n ${gif}`
     );
@@ -47,7 +47,7 @@ async function replyWithGif(content, message) {
   }
 }
 
-async function getGifFromAPI(content, messaage) {
+async function getGifFromAPI(content) {
   await fetch(
     `https://api.tenor.com/v1/search?q=${content}&key=${TOKEN.tenorKey}&limit=${TOKEN.tenorLimit}`
   )
@@ -60,6 +60,6 @@ async function getGifFromAPI(content, messaage) {
     .catch((error) => {
       console.log(error);
     });
-  var randomNum = Math.floor(Math.random() * gifUrl.length);
+  const randomNum = Math.floor(Math.random() * gifUrl.length);
   return gifUrl[randomNum].itemurl;
 }

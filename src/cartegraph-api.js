@@ -7,7 +7,7 @@ const bot = new Discord.Client();
 const url = KEYWORDS.prodweb;
 // const url = KEYWORDS.gemini;
 
-var cookie = "";
+let cookie = "";
 
 bot.once("ready", () => {
   console.log("Ready Cartegraph");
@@ -19,7 +19,7 @@ bot.on("message", (message) => {
   if (message.author.bot) return;
   if (message.content.indexOf(TOKEN.cgPrefix) !== 0) return;
 
-  var args = message.content.substring(TOKEN.cgPrefix.length).split(" ");
+  const args = message.content.substring(TOKEN.cgPrefix.length).split(" ");
 
   const values = message.content.replace(
     `${TOKEN.cgPrefix}` + args[0] + " ",
@@ -44,8 +44,9 @@ async function processMessage(keyword, values, message) {
     );
     return;
   }
-  if (cookie === "") await authenticateCarte();
 
+  if (cookie === "") await authenticateCarte();
+  
   switch (keyword) {
     case KEYWORDS.authenticate:
       const verified = await authenticateCarte();
@@ -205,7 +206,7 @@ async function getResourceByID(id, type, typeClass, message) {
 }
 
 async function createNewResource(id, type, typeClass, message) {
-  var newResource;
+  let newResource;
   if (type !== KEYWORDS.cgTasks) {
     newResource = {
       [typeClass]: [
@@ -312,8 +313,6 @@ function sendEmbeddedMessage(data, type, message) {
     );
 
   if (data.Oid) messageEmbed.addField("Oid", data.Oid);
-
-  // Asset Fields
   if (data.cgAssetIDField)
     messageEmbed.addField("Asset ID", data.cgAssetIDField);
   if (data.cgAssetTypeField)
@@ -323,13 +322,11 @@ function sendEmbeddedMessage(data, type, message) {
       "Pavement Classification",
       data.PavementClassificationField
     );
-
-  //Task Fields
   if (data.ActivityField)
     messageEmbed.addField("Task Type", data.ActivityField);
   if (data.StatusField) messageEmbed.addField("Status", data.StatusField);
-
-  // Universal Fields
+  if (data.TotalCostField)
+    messageEmbed.addField("Total Cost", `$${data.TotalCostField}`);
   if (data.EnteredByField)
     messageEmbed.addField("Entered By", data.EnteredByField);
   if (data.EntryDateField)
@@ -338,8 +335,6 @@ function sendEmbeddedMessage(data, type, message) {
     messageEmbed.addField("Last Modified By", data.LastModifiedByField);
   if (data.cgLastModifiedField)
     messageEmbed.addField("Last Modified On", data.cgLastModifiedField);
-  if (data.TotalCostField)
-    messageEmbed.addField("Total Cost", `$${data.TotalCostField}`);
   message.channel.send(messageEmbed);
 }
 

@@ -1,5 +1,4 @@
 const Discord = require("discord.js");
-const fetch = require("node-fetch");
 const KEYWORDS = require("./message-check.json");
 const TOKEN = require("../config.json");
 const bot = new Discord.Client();
@@ -14,7 +13,7 @@ bot.on("message", (message) => {
   // Checks for valid gif input
   if (message.author.bot) return;
   if (message.content.indexOf(TOKEN.prefix) !== 0) return;
-  var args = message.content.substring(TOKEN.prefix.length).split(" ");
+  const args = message.content.substring(TOKEN.prefix.length).split(" ");
   if (args[0].toLowerCase() != KEYWORDS.userCheck) return;
 
   const messageEmbed = new Discord.MessageEmbed()

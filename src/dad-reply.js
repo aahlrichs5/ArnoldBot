@@ -12,21 +12,21 @@ bot.login(TOKEN.token); // logs in with the token
 bot.on("message", (message) => {
   if (message.author.bot) return;
 
-  var words = message.content.toString().split(" ");
+  const words = message.content.toString().split(" ");
   findAndSend(words, message);
 });
 
 function findAndSend(words, message) {
-  var result = "";
-  var keywordCheck = -1;
-  var keywordSpot = 0;
+  let result = "";
+  let keywordCheck = -1;
+  let keywordSpot = 0;
 
-  for (i = 0; i < words.length && keywordCheck < 0; i++) {
+  for (let i = 0; i < words.length && keywordCheck < 0; i++) {
     keywordCheck = KEYWORDS.dadCheck.indexOf(words[i]);
     keywordSpot = i;
   }
 
-  for (i = keywordSpot + 1; i < words.length; i++) {
+  for (let i = keywordSpot + 1; i < words.length; i++) {
     result += ` ${words[i]}`;
   }
 

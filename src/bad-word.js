@@ -11,8 +11,8 @@ bot.login(TOKEN.token); // logs in with the token
 
 bot.on("message", (message) => {
   if (message.author.bot) return;
-  var messageString = message.content.toString().toLowerCase();
-  for (i = 0; i < KEYWORDS.badWords.length; i++) {
+  const messageString = message.content.toString().toLowerCase();
+  for (let i = 0; i < KEYWORDS.badWords.length; i++) {
     if (messageString.includes(KEYWORDS.badWords[i])) {
       message.channel.send(
         `I'm watching you <@${message.author.id}>, do you want a spanking?`
@@ -23,8 +23,8 @@ bot.on("message", (message) => {
 
 bot.on("message", (message) => {
   if (message.author.bot) return;
-  var messageString = message.content.toString().toLowerCase();
-  for (i = 0; i < KEYWORDS.bannedWords.length; i++) {
+  const messageString = message.content.toString().toLowerCase();
+  for (let i = 0; i < KEYWORDS.bannedWords.length; i++) {
     if (messageString.includes(KEYWORDS.bannedWords[i])) {
       message.delete();
       message.channel.send(
