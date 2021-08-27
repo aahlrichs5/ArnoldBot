@@ -4,8 +4,8 @@ const KEYWORDS = require("../cg-constants.json");
 const TOKEN = require("../config.json");
 const bot = new Discord.Client();
 
-// const url = "https://prodweb19-01.cartegraphoms.com/cobrakai/api/v1";
-const url = "https://geminiweb.cartegraph.com/cobrakai/api/v1";
+const url = KEYWORDS.prodweb;
+// const url = KEYWORDS.gemini;
 
 var cookie = "";
 
@@ -41,6 +41,7 @@ async function processMessage(keyword, values, message) {
     );
     return;
   }
+  if (cookie === "") await authenticateCarte();
 
   switch (keyword) {
     case KEYWORDS.authenticate:
@@ -56,7 +57,6 @@ async function processMessage(keyword, values, message) {
       }
       break;
     case KEYWORDS.getPavement:
-      if (cookie === "") await authenticateCarte();
       getResourceByID(
         values,
         KEYWORDS.cgPavement,
@@ -65,7 +65,6 @@ async function processMessage(keyword, values, message) {
       );
       break;
     case KEYWORDS.newPavement:
-      if (cookie === "") await authenticateCarte();
       createNewResource(
         values,
         KEYWORDS.cgPavement,
@@ -74,11 +73,9 @@ async function processMessage(keyword, values, message) {
       );
       break;
     case KEYWORDS.getTask:
-      if (cookie === "") await authenticateCarte();
       getResourceByID(values, KEYWORDS.cgTasks, KEYWORDS.cgTasksClass, message);
       break;
     case KEYWORDS.newTask:
-      if (cookie === "") await authenticateCarte();
       createNewResource(
         values,
         KEYWORDS.cgTasks,
@@ -87,7 +84,6 @@ async function processMessage(keyword, values, message) {
       );
       break;
     case KEYWORDS.getFacilty:
-      if (cookie === "") await authenticateCarte();
       getResourceByID(
         values,
         KEYWORDS.cgFacilities,
@@ -96,7 +92,6 @@ async function processMessage(keyword, values, message) {
       );
       break;
     case KEYWORDS.newFacility:
-      if (cookie === "") await authenticateCarte();
       createNewResource(
         values,
         KEYWORDS.cgFacilities,
@@ -105,11 +100,9 @@ async function processMessage(keyword, values, message) {
       );
       break;
     case KEYWORDS.getPond:
-      if (cookie === "") await authenticateCarte();
       getResourceByID(values, KEYWORDS.cgPond, KEYWORDS.cgPondsClass, message);
       break;
     case KEYWORDS.newPond:
-      if (cookie === "") await authenticateCarte();
       createNewResource(
         values,
         KEYWORDS.cgPond,
@@ -118,11 +111,9 @@ async function processMessage(keyword, values, message) {
       );
       break;
     case KEYWORDS.getSign:
-      if (cookie === "") await authenticateCarte();
       getResourceByID(values, KEYWORDS.cgSigns, KEYWORDS.cgSignsClass, message);
       break;
     case KEYWORDS.newSign:
-      if (cookie === "") await authenticateCarte();
       createNewResource(
         values,
         KEYWORDS.cgSigns,
@@ -235,6 +226,8 @@ async function createNewResource(id, type, typeClass, message) {
     console.log(error);
   }
 }
+
+async function createNewInspection(parentID, message) {}
 
 function sendEmbeddedMessage(data, type, message) {
   const messageEmbed = new Discord.MessageEmbed()
