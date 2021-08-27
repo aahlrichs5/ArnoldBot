@@ -36,8 +36,11 @@ async function processMessage(keyword, values, message) {
   }
 
   if (!values) {
-    message.channel.send(
-      "Please retry and enter an ID following the Cartegraph command."
+    createNewEmbed(
+      "Error",
+      "Error Message:",
+      "Please retry and enter an ID following the Cartegraph command.",
+      message
     );
     return;
   }
@@ -47,12 +50,18 @@ async function processMessage(keyword, values, message) {
     case KEYWORDS.authenticate:
       const verified = await authenticateCarte();
       if (verified)
-        message.channel.send(
-          `Authenticated user ${TOKEN.carteAPI.username} on ${url}.`
+        createNewEmbed(
+          "Authentication Success",
+          "Success Message:",
+          `Authenticated user ${TOKEN.carteAPI.username} on ${url}.`,
+          message
         );
       else {
-        message.channel.send(
-          `Was unable to authenticate user ${TOKEN.carteAPI.username} on ${url}`
+        createNewEmbed(
+          "Authentication Error",
+          `Was unable to authenticate user ${TOKEN.carteAPI.username} on ${url}`,
+          "The service may temporarily be unavailable",
+          message
         );
       }
       break;
@@ -131,8 +140,11 @@ async function processMessage(keyword, values, message) {
       message.channel.send("https://imgur.com/a/8842IVk");
       break;
     default:
-      message.channel.send(
-        `I didn't recognize that Cartegraph command. Type "~cgHelp" for a list of commands.`
+      createNewEmbed(
+        "Error Message",
+        "I didn't recognize that Cartegraph command",
+        `Type "~cgHelp" for a list of commands.`,
+        message
       );
   }
 }
@@ -174,8 +186,11 @@ async function getResourceByID(id, type, typeClass, message) {
       })
       .then(function (data) {
         if (data[Object.keys(data)[0]][0] === undefined) {
-          message.channel.send(
-            `I couldn't find a ${type} with that ID. Please try again with a valid ID.`
+          createNewEmbed(
+            "Error",
+            `I couldn't find a ${type} with an ID of ${id}`,
+            "Please try again with a valid ID.",
+            message
           );
           return;
         }
@@ -220,6 +235,15 @@ async function createNewResource(id, type, typeClass, message) {
         return resp.json();
       })
       .then(function (data) {
+        if (data[Object.keys(data)[0]][0].IDField === undefined) {
+          createNewEmbed(
+            "Error",
+            `A ${type} with the ID ${id} already exists`,
+            `Please try creating another ${type} with a differnt ID.`,
+            message
+          );
+          return;
+        }
         sendEmbeddedMessage(data[Object.keys(data)[0]][0], type, message);
       })
       .catch((error) => {
@@ -255,6 +279,16 @@ async function createNewInspection(parentID, message) {
         return resp.json();
       })
       .then(function (data) {
+        if (data[Object.keys(data)[0]][0].IDField === undefined) {
+          createNewEmbed(
+            "Error",
+            `I couldn't find a ${KEYWORDS.cgPavement} with dn ID of ${parentID}`,
+            "Please try creating another inspection with a different parent ID.",
+            message
+          );
+          return;
+        }
+
         sendEmbeddedMessage(
           data[Object.keys(data)[0]][0],
           KEYWORDS.cgTasks,
@@ -355,11 +389,11 @@ function sendHelpEmbed(message) {
     .addFields(
       {
         name: "Supported Assets",
-        value: `Pavement, Facility, Pond, and Sign.`,
+        value: "Pavement, Facility, Pond, and Sign.",
       },
       {
         name: "~get{asset} {id}",
-        value: `Find an existing asset with the given ID.`,
+        value: "Find an existing asset with the given ID.",
       },
       {
         name: "~getTask {id}",
@@ -372,7 +406,31 @@ function sendHelpEmbed(message) {
       {
         name: "~newTask {id}",
         value: "Create a new task with the given ID.",
+      },
+      {
+        name: "~newInspection {id}",
+        value:
+          "Create a new pavement inspection for the pavement with the given ID.",
       }
     );
+  message.channel.send(messageEmbed);
+}
+
+function createNewEmbed(header, title, content, message) {
+  const messageEmbed = new Discord.MessageEmbed()
+    .setAuthor(
+      "Cartegraph One",
+      "https://is1-ssl.mzstatic.com/image/thumb/Purple115/v4/1c/00/63/1c00639a-adef-aa09-f808-c567d7138cd6/AppIcon-1x_U007emarketing-0-7-0-85-220.png/400x400.png",
+      "https://develop.cartegraphdev.com/"
+    )
+    .setColor("#f78f1e")
+    .setTitle(`${header}`)
+    .setThumbnail(
+      `https://is1-ssl.mzstatic.com/image/thumb/Purple115/v4/1c/00/63/1c00639a-adef-aa09-f808-c567d7138cd6/AppIcon-1x_U007emarketing-0-7-0-85-220.png/400x400.png`
+    )
+    .addFields({
+      name: `${title}`,
+      value: `${content}`,
+    });
   message.channel.send(messageEmbed);
 }
