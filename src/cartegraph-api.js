@@ -37,7 +37,7 @@ async function processMessage(keyword, values, message) {
 
   if (!values) {
     createNewEmbed(
-      "Error",
+      ":x: Error",
       "Error Message:",
       "Please retry and enter an ID following the Cartegraph command.",
       message
@@ -51,7 +51,7 @@ async function processMessage(keyword, values, message) {
       const verified = await authenticateCarte();
       if (verified)
         createNewEmbed(
-          "Authentication Success",
+          ":white_check_mark: Authentication Success",
           "Success Message:",
           `Authenticated user ${TOKEN.carteAPI.username} on ${url}.`,
           message
@@ -141,7 +141,7 @@ async function processMessage(keyword, values, message) {
       break;
     default:
       createNewEmbed(
-        "Error Message",
+        ":x: Error Message",
         "I didn't recognize that Cartegraph command",
         `Type "~cgHelp" for a list of commands.`,
         message
@@ -187,7 +187,7 @@ async function getResourceByID(id, type, typeClass, message) {
       .then(function (data) {
         if (data[Object.keys(data)[0]][0] === undefined) {
           createNewEmbed(
-            "Error",
+            ":x: Error",
             `I couldn't find a ${type} with an ID of ${id}`,
             "Please try again with a valid ID.",
             message
@@ -237,7 +237,7 @@ async function createNewResource(id, type, typeClass, message) {
       .then(function (data) {
         if (data[Object.keys(data)[0]][0].IDField === undefined) {
           createNewEmbed(
-            "Error",
+            ":x: Error",
             `A ${type} with the ID ${id} already exists`,
             `Please try creating another ${type} with a differnt ID.`,
             message
@@ -281,7 +281,7 @@ async function createNewInspection(parentID, message) {
       .then(function (data) {
         if (data[Object.keys(data)[0]][0].IDField === undefined) {
           createNewEmbed(
-            "Error",
+            ":x: Error",
             `I couldn't find a ${KEYWORDS.cgPavement} with dn ID of ${parentID}`,
             "Please try creating another inspection with a different parent ID.",
             message
@@ -305,13 +305,8 @@ async function createNewInspection(parentID, message) {
 
 function sendEmbeddedMessage(data, type, message) {
   const messageEmbed = new Discord.MessageEmbed()
-    .setAuthor(
-      "Cartegraph One",
-      "https://is1-ssl.mzstatic.com/image/thumb/Purple115/v4/1c/00/63/1c00639a-adef-aa09-f808-c567d7138cd6/AppIcon-1x_U007emarketing-0-7-0-85-220.png/400x400.png",
-      "https://develop.cartegraphdev.com/"
-    )
     .setColor("#f78f1e")
-    .setTitle(`${type} ID: ${data.IDField}`)
+    .setTitle(`:memo: ${type} ID: ${data.IDField}`)
     .setThumbnail(
       `https://is1-ssl.mzstatic.com/image/thumb/Purple115/v4/1c/00/63/1c00639a-adef-aa09-f808-c567d7138cd6/AppIcon-1x_U007emarketing-0-7-0-85-220.png/400x400.png`
     );
@@ -350,13 +345,8 @@ function sendEmbeddedMessage(data, type, message) {
 
 function sendHelpEmbed(message) {
   const messageEmbed = new Discord.MessageEmbed()
-    .setAuthor(
-      "Cartegraph One",
-      "https://is1-ssl.mzstatic.com/image/thumb/Purple115/v4/1c/00/63/1c00639a-adef-aa09-f808-c567d7138cd6/AppIcon-1x_U007emarketing-0-7-0-85-220.png/400x400.png",
-      "https://develop.cartegraphdev.com/"
-    )
     .setColor("#f78f1e")
-    .setTitle("Help & Commands")
+    .setTitle(":grey_question: Help & Commands")
     .setThumbnail(
       `https://is1-ssl.mzstatic.com/image/thumb/Purple115/v4/1c/00/63/1c00639a-adef-aa09-f808-c567d7138cd6/AppIcon-1x_U007emarketing-0-7-0-85-220.png/400x400.png`
     )
@@ -392,11 +382,6 @@ function sendHelpEmbed(message) {
 
 function createNewEmbed(header, title, content, message) {
   const messageEmbed = new Discord.MessageEmbed()
-    .setAuthor(
-      "Cartegraph One",
-      "https://is1-ssl.mzstatic.com/image/thumb/Purple115/v4/1c/00/63/1c00639a-adef-aa09-f808-c567d7138cd6/AppIcon-1x_U007emarketing-0-7-0-85-220.png/400x400.png",
-      "https://develop.cartegraphdev.com/"
-    )
     .setColor("#f78f1e")
     .setTitle(`${header}`)
     .setThumbnail(
