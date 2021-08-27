@@ -315,62 +315,36 @@ function sendEmbeddedMessage(data, type, message) {
     .setThumbnail(
       `https://is1-ssl.mzstatic.com/image/thumb/Purple115/v4/1c/00/63/1c00639a-adef-aa09-f808-c567d7138cd6/AppIcon-1x_U007emarketing-0-7-0-85-220.png/400x400.png`
     );
-  if (data.Oid)
-    messageEmbed.addFields({
-      name: "Oid",
-      value: `${data.Oid}`,
-    });
+
+  if (data.Oid) messageEmbed.addField("Oid", data.Oid);
 
   // Asset Fields
   if (data.cgAssetIDField)
-    messageEmbed.addFields({
-      name: "Asset ID",
-      value: `${data.cgAssetIDField}`,
-    });
+    messageEmbed.addField("Asset ID", data.cgAssetIDField);
   if (data.cgAssetTypeField)
-    messageEmbed.addFields({
-      name: "Asset Type",
-      value: `${data.cgAssetTypeField}`,
-    });
+    messageEmbed.addField("Asset Type", data.cgAssetTypeField);
   if (data.PavementClassificationField)
-    messageEmbed.addFields({
-      name: "Pavement Classification",
-      value: `${data.PavementClassificationField}`,
-    });
+    messageEmbed.addField(
+      "Pavement Classification",
+      data.PavementClassificationField
+    );
 
   //Task Fields
   if (data.ActivityField)
-    messageEmbed.addFields({
-      name: "Task Type",
-      value: `${data.ActivityField}`,
-    });
+    messageEmbed.addField("Task Type", data.ActivityField);
+  if (data.StatusField) messageEmbed.addField("Status", data.StatusField);
 
   // Universal Fields
   if (data.EnteredByField)
-    messageEmbed.addFields({
-      name: "Entered By",
-      value: `${data.EnteredByField}`,
-    });
+    messageEmbed.addField("Entered By", data.EnteredByField);
   if (data.EntryDateField)
-    messageEmbed.addFields({
-      name: "Created On",
-      value: `${data.EntryDateField}`,
-    });
+    messageEmbed.addField("Created On", data.EntryDateField);
   if (data.LastModifiedByField)
-    messageEmbed.addFields({
-      name: "Last Modified By",
-      value: `${data.LastModifiedByField}`,
-    });
+    messageEmbed.addField("Last Modified By", data.LastModifiedByField);
   if (data.cgLastModifiedField)
-    messageEmbed.addFields({
-      name: "Last Modified On",
-      value: `${data.cgLastModifiedField}`,
-    });
+    messageEmbed.addField("Last Modified On", data.cgLastModifiedField);
   if (data.TotalCostField)
-    messageEmbed.addFields({
-      name: "Total Cost",
-      value: `$${data.TotalCostField}`,
-    });
+    messageEmbed.addField("Total Cost", `$${data.TotalCostField}`);
   message.channel.send(messageEmbed);
 }
 
