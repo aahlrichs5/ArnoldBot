@@ -1,0 +1,31 @@
+{
+  "name": "arnoldbot",
+  "version": "1.0.0",
+  "description": "This is the first discord bot that I created: Arnold Bot. Currently a WIP.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aahlrichs5/ArnoldBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aahlrichs5/ArnoldBot/issues"
+  },
+  "homepage": "https://github.com/aahlrichs5/ArnoldBot#readme",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "jshint": "^2.11.1",
+    "node-fetch": "^2.6.0",
+    "opusscript": "0.0.7",
+    "tenorjs": "^1.0.7",
+    "ytdl-core": "^2.1.7"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0"
+  }
+}
