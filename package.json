@@ -19,11 +19,7 @@
   "homepage": "https://github.com/aahlrichs5/ArnoldBot#readme",
   "dependencies": {
     "discord.js": "^13.8.0",
-    "jshint": "^2.11.1",
-    "node-fetch": "^2.6.0",
-    "opusscript": "0.0.7",
-    "tenorjs": "^1.0.7",
-    "ytdl-core": "^2.1.7"
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "eslint": "^7.32.0"
