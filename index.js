@@ -21,6 +21,8 @@ bot.once("ready", () => {
 bot.login(TOKEN.token); // logs in with the token
 
 bot.on("messageCreate", (message) => {
+  if (message.author.bot) return;
+
   if (message.content.toLowerCase().startsWith(`${TOKEN.prefix}help`)) {
     const embedMessage = new MessageEmbed()
       .setAuthor({
@@ -41,6 +43,7 @@ bot.on("messageCreate", (message) => {
       );
     message.channel.send({ embeds: [embedMessage] });
   }
+
   if (message.content.toLowerCase().startsWith(`${TOKEN.prefix}hello`)) {
     message.channel.send(`Hello, I am Arnold Bot!`);
   }

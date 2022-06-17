@@ -13,19 +13,14 @@ bot.login(TOKEN.token); // logs in with the token
 
 bot.on("messageCreate", (message) => {
   if (message.author.bot) return;
+
   const messageString = message.content.toString().toLowerCase();
   for (let i = 0; i < KEYWORDS.badWords.length; i++) {
     if (messageString.includes(KEYWORDS.badWords[i])) {
-      message.channel.send(
-        `I'm watching you <@${message.author.id}>, do you want a spanking?`
-      );
+      message.channel.send(`I'm watching you <@${message.author.id}>!`);
     }
   }
-});
 
-bot.on("messageCreate", (message) => {
-  if (message.author.bot) return;
-  const messageString = message.content.toString().toLowerCase();
   for (let i = 0; i < KEYWORDS.bannedWords.length; i++) {
     if (messageString.includes(KEYWORDS.bannedWords[i])) {
       message.delete();
