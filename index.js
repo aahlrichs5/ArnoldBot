@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const Discord = require("discord.js");
+const { Client, Intents, MessageEmbed } = require("discord.js");
 const TOKEN = require("./config.json");
 const badWord = require("./src/bad-word");
 const cartegraph = require("./src/cartegraph-api");
@@ -7,7 +7,9 @@ const dadBot = require("./src/dad-reply");
 const gifReply = require("./src/gif-reply");
 const riotAPI = require("./src/riot-api");
 const userInfoReply = require("./src/user-info-reply");
-const bot = new Discord.Client();
+const bot = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+});
 
 // Logging when bot is online
 bot.once("ready", () => {
@@ -18,14 +20,14 @@ bot.once("ready", () => {
 
 bot.login(TOKEN.token); // logs in with the token
 
-bot.on("message", (message) => {
+bot.on("messageCreate", (message) => {
   if (message.content.toLowerCase().startsWith(`${TOKEN.prefix}help`)) {
-    const embedMessage = new Discord.MessageEmbed()
-      .setAuthor(
-        "ArnoldBot",
-        "https://i.imgur.com/Dotbc16.png",
-        "https://github.com/aahlrichs5/ArnoldBot"
-      )
+    const embedMessage = new MessageEmbed()
+      .setAuthor({
+        name: "ArnoldBot",
+        iconURL: "https://i.imgur.com/Dotbc16.png",
+        url: "https://github.com/aahlrichs5/ArnoldBot",
+      })
       .setColor("#ff0070")
       .setTitle("ArnoldBot Help:")
       .setThumbnail("https://i.imgur.com/Dotbc16.png")
@@ -37,11 +39,8 @@ bot.on("message", (message) => {
         },
         { name: "!user", value: "I'll send info about your discord account" }
       );
-    message.channel.send(embedMessage);
+    message.channel.send({ embeds: [embedMessage] });
   }
-});
-
-bot.on("message", (message) => {
   if (message.content.toLowerCase().startsWith(`${TOKEN.prefix}hello`)) {
     message.channel.send(`Hello, I am Arnold Bot!`);
   }

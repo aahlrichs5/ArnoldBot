@@ -1,8 +1,10 @@
-const Discord = require("discord.js");
+const { Client, Intents } = require("discord.js");
 const fetch = require("node-fetch");
 const KEYWORDS = require("./message-check.json");
 const TOKEN = require("../config.json");
-const bot = new Discord.Client();
+const bot = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+});
 
 let gifUrl;
 
@@ -12,7 +14,7 @@ bot.once("ready", () => {
 
 bot.login(TOKEN.token); // logs in with the token
 
-bot.on("message", (message) => {
+bot.on("messageCreate", (message) => {
   // Checks for valid gif input
   if (message.author.bot) return;
   if (message.content.indexOf(TOKEN.prefix) !== 0) return;

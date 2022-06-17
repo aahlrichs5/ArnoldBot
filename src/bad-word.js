@@ -1,7 +1,9 @@
-const Discord = require("discord.js");
+const { Client, Intents } = require("discord.js");
 const KEYWORDS = require("./message-check.json");
 const TOKEN = require("../config.json");
-const bot = new Discord.Client();
+const bot = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+});
 
 bot.once("ready", () => {
   console.log("Ready BadWord");
@@ -9,7 +11,7 @@ bot.once("ready", () => {
 
 bot.login(TOKEN.token); // logs in with the token
 
-bot.on("message", (message) => {
+bot.on("messageCreate", (message) => {
   if (message.author.bot) return;
   const messageString = message.content.toString().toLowerCase();
   for (let i = 0; i < KEYWORDS.badWords.length; i++) {
@@ -21,7 +23,7 @@ bot.on("message", (message) => {
   }
 });
 
-bot.on("message", (message) => {
+bot.on("messageCreate", (message) => {
   if (message.author.bot) return;
   const messageString = message.content.toString().toLowerCase();
   for (let i = 0; i < KEYWORDS.bannedWords.length; i++) {
@@ -32,7 +34,11 @@ bot.on("message", (message) => {
       );
 
       //logs to the mod log channel
-      bot.channels.cache.get("846868428664340540").send(`@everyone, <@${message.author.id}> said ${message.content}, I deleted this message.`);
+      bot.channels.cache
+        .get("846868428664340540")
+        .send(
+          `@everyone, <@${message.author.id}> said ${message.content}, I deleted this message.`
+        );
     }
   }
 });

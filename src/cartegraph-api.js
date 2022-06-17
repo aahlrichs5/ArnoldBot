@@ -1,8 +1,10 @@
-const Discord = require("discord.js");
+const { Client, Intents, MessageEmbed } = require("discord.js");
 const fetch = require("node-fetch");
 const KEYWORDS = require("../cg-constants.json");
 const TOKEN = require("../config.json");
-const bot = new Discord.Client();
+const bot = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+});
 
 const url = KEYWORDS.prodweb;
 // const url = KEYWORDS.gemini;
@@ -15,7 +17,7 @@ bot.once("ready", () => {
 
 bot.login(TOKEN.token); // logs in with the token
 
-bot.on("message", (message) => {
+bot.on("messageCreate", (message) => {
   if (message.author.bot) return;
   if (message.content.indexOf(TOKEN.cgPrefix) !== 0) return;
 
@@ -46,7 +48,7 @@ async function processMessage(keyword, values, message) {
   }
 
   if (cookie === "") await authenticateCarte();
-  
+
   switch (keyword) {
     case KEYWORDS.authenticate:
       const verified = await authenticateCarte();
@@ -305,14 +307,13 @@ async function createNewInspection(parentID, message) {
 }
 
 function sendEmbeddedMessage(data, type, message) {
-  const messageEmbed = new Discord.MessageEmbed()
+  const messageEmbed = new MessageEmbed()
     .setColor("#f78f1e")
     .setTitle(`:memo: ${type} ID: ${data.IDField}`)
     .setThumbnail(
       `https://is1-ssl.mzstatic.com/image/thumb/Purple115/v4/1c/00/63/1c00639a-adef-aa09-f808-c567d7138cd6/AppIcon-1x_U007emarketing-0-7-0-85-220.png/400x400.png`
     );
 
-  if (data.Oid) messageEmbed.addField("Oid", data.Oid);
   if (data.cgAssetIDField)
     messageEmbed.addField("Asset ID", data.cgAssetIDField);
   if (data.cgAssetTypeField)
@@ -335,11 +336,11 @@ function sendEmbeddedMessage(data, type, message) {
     messageEmbed.addField("Last Modified By", data.LastModifiedByField);
   if (data.cgLastModifiedField)
     messageEmbed.addField("Last Modified On", data.cgLastModifiedField);
-  message.channel.send(messageEmbed);
+  message.channel.send({ embeds: [messageEmbed] });
 }
 
 function sendHelpEmbed(message) {
-  const messageEmbed = new Discord.MessageEmbed()
+  const messageEmbed = new MessageEmbed()
     .setColor("#f78f1e")
     .setTitle(":grey_question: Help & Commands")
     .setThumbnail(
@@ -372,11 +373,11 @@ function sendHelpEmbed(message) {
           "Create a new pavement inspection for the pavement with the given ID.",
       }
     );
-  message.channel.send(messageEmbed);
+  message.channel.send({ embeds: [messageEmbed] });
 }
 
 function createNewEmbed(header, title, content, message) {
-  const messageEmbed = new Discord.MessageEmbed()
+  const messageEmbed = new MessageEmbed()
     .setColor("#f78f1e")
     .setTitle(`${header}`)
     .setThumbnail(
@@ -386,5 +387,5 @@ function createNewEmbed(header, title, content, message) {
       name: `${title}`,
       value: `${content}`,
     });
-  message.channel.send(messageEmbed);
+  message.channel.send({ embeds: [messageEmbed] });
 }
