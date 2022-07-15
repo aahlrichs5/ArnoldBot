@@ -1,6 +1,7 @@
-const { Client, Intents } = require("discord.js");
-const KEYWORDS = require("./message-check.json");
+import { Client, Intents } from "discord.js";
 const TOKEN = require("../config.json");
+const KEYWORDS = require("./message-check.json");
+
 const bot = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
@@ -29,11 +30,11 @@ bot.on("messageCreate", (message) => {
       );
 
       //logs to the mod log channel
-      bot.channels.cache
-        .get("846868428664340540")
-        .send(
-          `@everyone, <@${message.author.id}> said ${message.content}, I deleted this message.`
-        );
+      // bot.channels.cache
+      //   .get("846868428664340540")
+      //   .send(
+      //     `@everyone, <@${message.author.id}> said ${message.content}, I deleted this message.`
+      //   );
     }
   }
 });

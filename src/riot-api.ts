@@ -1,7 +1,7 @@
-const { Client, Intents } = require("discord.js");
-const fetch = require("node-fetch");
-const KEYWORDS = require("./message-check.json");
+import { Client, Intents } from "discord.js";
 const TOKEN = require("../config.json");
+const KEYWORDS = require("./message-check.json");
+
 const bot = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
@@ -51,7 +51,7 @@ async function checkLeagueMessage(keyword, summonerName, message) {
 }
 
 async function fetchChampionID(championName) {
-  const gameVersion = await fetchGameVersion();
+  const gameVersion = await fetchGameVersion(null);
 
   try {
     await fetch(

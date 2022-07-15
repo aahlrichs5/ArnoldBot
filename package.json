@@ -2,10 +2,10 @@
   "name": "arnoldbot",
   "version": "1.0.0",
   "description": "This is the first discord bot that I created: Arnold Bot. Currently a WIP.",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "ts-node ./src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,8 @@
   "homepage": "https://github.com/aahlrichs5/ArnoldBot#readme",
   "dependencies": {
     "discord.js": "^13.8.0",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "eslint": "^7.32.0"

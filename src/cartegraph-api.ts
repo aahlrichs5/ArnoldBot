@@ -1,7 +1,7 @@
-const { Client, Intents, MessageEmbed } = require("discord.js");
-const fetch = require("node-fetch");
-const KEYWORDS = require("../cg-constants.json");
+import { Client, Intents, Message, MessageEmbed } from "discord.js";
 const TOKEN = require("../config.json");
+const KEYWORDS = require("./message-check.json");
+
 const bot = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });

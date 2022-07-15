@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
-const { Client, Intents, MessageEmbed } = require("discord.js");
-const TOKEN = require("./config.json");
-const badWord = require("./src/bad-word");
-const cartegraph = require("./src/cartegraph-api");
-const dadBot = require("./src/dad-reply");
-const gifReply = require("./src/gif-reply");
-const riotAPI = require("./src/riot-api");
-const userInfoReply = require("./src/user-info-reply");
+import { Client, Intents, MessageEmbed } from "discord.js";
+const TOKEN = require("../config.json");
+const badWord = require("./bad-word.ts");
+const cartegraph = require("./cartegraph-api.ts");
+const dadBot = require("./dad-reply.ts");
+const gifReply = require("./gif-reply.ts");
+const riotAPI = require("./riot-api.ts");
+const userInfoReply = require("./user-info-reply.ts");
+
 const bot = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
@@ -15,7 +16,6 @@ const bot = new Client({
 bot.once("ready", () => {
   console.log("Ready Index");
   bot.user.setActivity("!help");
-  bot.user.set;
 });
 
 bot.login(TOKEN.token); // logs in with the token

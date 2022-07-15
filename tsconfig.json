@@ -1,0 +1,15 @@
+{
+  "extends": "@tsconfig/node14/tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "outDir": "dist/",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "lib": ["es2018", "dom"]
+  },
+  "include": ["src/*.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}
