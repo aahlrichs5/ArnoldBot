@@ -1,22 +1,21 @@
 {
   "name": "arnoldbot",
   "version": "1.0.0",
-  "description": "This is the first discord bot that I created: Arnold Bot. Currently a WIP.",
+  "author": "Alex Ahlrichs",
+  "description": "This is a dicord bot that I created to help me learn JS. Currently a WIP but does not have any official release plans.",
+  "license": "ISC",
   "main": "src/index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node ./src/index.ts"
-  },
+  "homepage": "https://github.com/aahlrichs5/ArnoldBot#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aahlrichs5/ArnoldBot.git"
   },
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/aahlrichs5/ArnoldBot/issues"
   },
-  "homepage": "https://github.com/aahlrichs5/ArnoldBot#readme",
+  "scripts": {
+    "start": "ts-node ./src/index.ts"
+  },
   "dependencies": {
     "discord.js": "^13.8.0",
     "node-fetch": "^2.6.0",
