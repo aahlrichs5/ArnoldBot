@@ -6,9 +6,9 @@
     "moduleResolution": "node",
     "outDir": "dist/",
     "sourceMap": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "strictNullChecks": false,
-    "lib": ["es2018", "dom"]
+    "lib": ["es2018"]
   },
   "include": ["src/*.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]

@@ -1,4 +1,5 @@
-import { Client, Intents } from "discord.js";
+import { Client, Intents, Message } from "discord.js";
+import fetch from "node-fetch";
 const TOKEN = require("../config.json");
 const KEYWORDS = require("./message-check.json");
 
@@ -12,7 +13,7 @@ bot.once("ready", () => {
 
 bot.login(TOKEN.token); // logs in with the token
 
-bot.on("messageCreate", (message) => {
+bot.on("messageCreate", (message: Message) => {
   if (message.author.bot) return;
   if (message.content.indexOf(TOKEN.prefix) !== 0) return;
   const args = message.content.substring(TOKEN.prefix.length).split(" ");
@@ -30,7 +31,11 @@ bot.on("messageCreate", (message) => {
   checkLeagueMessage(args[0].toLocaleLowerCase(), summonerName, message);
 });
 
-async function checkLeagueMessage(keyword, summonerName, message) {
+async function checkLeagueMessage(
+  keyword: string,
+  summonerName: string,
+  message: Message
+) {
   switch (keyword) {
     case KEYWORDS.leagueLevel:
       await fetchSummonerLevel(summonerName, message);
@@ -44,14 +49,14 @@ async function checkLeagueMessage(keyword, summonerName, message) {
       message.channel.send(`League of Legends is on patch ${gameVersion}`);
       break;
     case KEYWORDS.champMastery:
-      const champID = await fetchChampionID(summonerName);
+      const champID = await fetchChampionID(summonerName, message);
       console.log(champID);
       break;
   }
 }
 
-async function fetchChampionID(championName) {
-  const gameVersion = await fetchGameVersion(null);
+async function fetchChampionID(championName: string, message: Message) {
+  const gameVersion = await fetchGameVersion(message);
 
   try {
     await fetch(
@@ -74,7 +79,7 @@ async function fetchChampionID(championName) {
   }
 }
 
-async function fetchGameVersion(message) {
+async function fetchGameVersion(message: Message) {
   let version;
   try {
     await fetch(`https://ddragon.leagueoflegends.com/api/versions.json`)
@@ -87,13 +92,13 @@ async function fetchGameVersion(message) {
       .catch((error) => {
         console.log(error);
       });
-    return version[0];
+    if (version) return version[0];
   } catch (error) {
     message.channel.send("Error finding game version for league of legends.");
   }
 }
 
-async function fetchSummonerLevel(summonerName, message) {
+async function fetchSummonerLevel(summonerName: string, message: Message) {
   let summonerLevel;
   try {
     await fetch(

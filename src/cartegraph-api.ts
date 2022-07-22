@@ -1,4 +1,5 @@
 import { Client, Intents, Message, MessageEmbed } from "discord.js";
+import fetch from "node-fetch";
 const TOKEN = require("../config.json");
 const KEYWORDS = require("./message-check.json");
 
@@ -17,7 +18,7 @@ bot.once("ready", () => {
 
 bot.login(TOKEN.token); // logs in with the token
 
-bot.on("messageCreate", (message) => {
+bot.on("messageCreate", (message: Message) => {
   if (message.author.bot) return;
   if (message.content.indexOf(TOKEN.cgPrefix) !== 0) return;
 
@@ -31,7 +32,11 @@ bot.on("messageCreate", (message) => {
   processMessage(args[0].toLocaleLowerCase(), values, message);
 });
 
-async function processMessage(keyword, values, message) {
+async function processMessage(
+  keyword: string,
+  values: string,
+  message: Message
+) {
   if (keyword === KEYWORDS.cgHelp) {
     sendHelpEmbed(message);
     return;
@@ -176,7 +181,12 @@ async function authenticateCarte() {
   return true;
 }
 
-async function getResourceByID(id, type, typeClass, message) {
+async function getResourceByID(
+  id: string,
+  type: string,
+  typeClass: string,
+  message: Message
+) {
   const filter = `(([id] is equal to "${id}"))`;
 
   try {
@@ -207,7 +217,12 @@ async function getResourceByID(id, type, typeClass, message) {
   }
 }
 
-async function createNewResource(id, type, typeClass, message) {
+async function createNewResource(
+  id: string,
+  type: string,
+  typeClass: string,
+  message: Message
+) {
   let newResource;
   if (type !== KEYWORDS.cgTasks) {
     newResource = {
@@ -257,7 +272,7 @@ async function createNewResource(id, type, typeClass, message) {
   }
 }
 
-async function createNewInspection(parentID, message) {
+async function createNewInspection(parentID: string, message: Message) {
   const rand = Math.floor(100000 + Math.random() * 900000);
 
   const newInspection = {
@@ -306,7 +321,7 @@ async function createNewInspection(parentID, message) {
   }
 }
 
-function sendEmbeddedMessage(data, type, message) {
+function sendEmbeddedMessage(data: any, type: string, message: Message) {
   const messageEmbed = new MessageEmbed()
     .setColor("#f78f1e")
     .setTitle(`:memo: ${type} ID: ${data.IDField}`)
@@ -339,7 +354,7 @@ function sendEmbeddedMessage(data, type, message) {
   message.channel.send({ embeds: [messageEmbed] });
 }
 
-function sendHelpEmbed(message) {
+function sendHelpEmbed(message: Message) {
   const messageEmbed = new MessageEmbed()
     .setColor("#f78f1e")
     .setTitle(":grey_question: Help & Commands")
@@ -376,7 +391,12 @@ function sendHelpEmbed(message) {
   message.channel.send({ embeds: [messageEmbed] });
 }
 
-function createNewEmbed(header, title, content, message) {
+function createNewEmbed(
+  header: string,
+  title: string,
+  content: string,
+  message: Message
+) {
   const messageEmbed = new MessageEmbed()
     .setColor("#f78f1e")
     .setTitle(`${header}`)

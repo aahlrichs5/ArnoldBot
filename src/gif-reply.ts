@@ -1,4 +1,5 @@
-import { Client, Intents } from "discord.js";
+import { Client, Intents, Message } from "discord.js";
+import fetch from "node-fetch";
 const TOKEN = require("../config.json");
 const KEYWORDS = require("./message-check.json");
 
@@ -6,7 +7,7 @@ const bot = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
-let gifUrl;
+//var gifUrl;
 
 bot.once("ready", () => {
   console.log("Ready GifReply");
@@ -14,7 +15,7 @@ bot.once("ready", () => {
 
 bot.login(TOKEN.token); // logs in with the token
 
-bot.on("messageCreate", (message) => {
+bot.on("messageCreate", (message: Message) => {
   // Checks for valid gif input
   if (message.author.bot) return;
   if (message.content.indexOf(TOKEN.prefix) !== 0) return;
@@ -36,7 +37,7 @@ bot.on("messageCreate", (message) => {
   replyWithGif(gifString, message);
 });
 
-async function replyWithGif(content, message) {
+async function replyWithGif(content: string, message: Message) {
   try {
     const gif = await getGifFromAPI(content);
     message.channel.send(
@@ -49,7 +50,9 @@ async function replyWithGif(content, message) {
   }
 }
 
-async function getGifFromAPI(content) {
+async function getGifFromAPI(content: string) {
+  var gifUrl: GifObject[] = [];
+
   await fetch(
     `https://api.tenor.com/v1/search?q=${content}&key=${TOKEN.tenorKey}&limit=${TOKEN.tenorLimit}`
   )
@@ -62,6 +65,11 @@ async function getGifFromAPI(content) {
     .catch((error) => {
       console.log(error);
     });
+
   const randomNum = Math.floor(Math.random() * gifUrl.length);
   return gifUrl[randomNum].itemurl;
 }
+
+export type GifObject = {
+  itemurl: string;
+};

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Client, Intents, MessageEmbed } from "discord.js";
+import { Client, Intents, Message, MessageEmbed } from "discord.js";
 const TOKEN = require("../config.json");
 const badWord = require("./bad-word.ts");
 const cartegraph = require("./cartegraph-api.ts");
@@ -20,7 +20,7 @@ bot.once("ready", () => {
 
 bot.login(TOKEN.token); // logs in with the token
 
-bot.on("messageCreate", (message) => {
+bot.on("messageCreate", (message: Message) => {
   if (message.author.bot) return;
 
   if (message.content.toLowerCase().startsWith(`${TOKEN.prefix}help`)) {

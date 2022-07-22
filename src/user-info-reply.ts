@@ -1,4 +1,4 @@
-import { Client, Intents, MessageEmbed } from "discord.js";
+import { Client, Intents, Message, MessageEmbed } from "discord.js";
 const TOKEN = require("../config.json");
 const KEYWORDS = require("./message-check.json");
 
@@ -12,7 +12,7 @@ bot.once("ready", () => {
 
 bot.login(TOKEN.token); // logs in with the token
 
-bot.on("messageCreate", (message) => {
+bot.on("messageCreate", (message: Message) => {
   // Checks for valid user command input
   if (message.author.bot) return;
   if (message.content.indexOf(TOKEN.prefix) !== 0) return;

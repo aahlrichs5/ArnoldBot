@@ -1,4 +1,4 @@
-import { Client, Intents } from "discord.js";
+import { Client, Intents, Message } from "discord.js";
 const TOKEN = require("../config.json");
 const KEYWORDS = require("./message-check.json");
 
@@ -12,7 +12,7 @@ bot.once("ready", () => {
 
 bot.login(TOKEN.token); // logs in with the token
 
-bot.on("messageCreate", (message) => {
+bot.on("messageCreate", (message: Message) => {
   if (message.author.bot) return;
 
   const messageString = message.content.toString().toLowerCase();
