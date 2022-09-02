@@ -4,10 +4,8 @@ import { botInteraction } from "./slash/interaction";
 import { onReady } from "./slash/on-ready";
 const TOKEN = require("../config.json");
 const badWord = require("./bad-word.ts");
-const cartegraph = require("./cartegraph-api.ts");
 const dadBot = require("./dad-reply.ts");
 const riotAPI = require("./riot-api.ts");
-const userInfoReply = require("./user-info-reply.ts");
 
 const bot = new Client({
   intents: [Intents.FLAGS.GUILDS],

@@ -1,6 +1,7 @@
 import { MessageEmbed } from "discord.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { Command } from "../command";
+import Constants from "../../resources/constants";
 
 export const helpCommand: Command = {
   data: new SlashCommandBuilder()
@@ -10,7 +11,7 @@ export const helpCommand: Command = {
     await interaction.deferReply();
 
     const embedMessage = new MessageEmbed()
-      .setColor("#42f5a4")
+      .setColor(`#${Constants.embedColor}`)
       .setTitle("ArnoldBot Help")
       .setThumbnail("https://i.imgur.com/rZeTEsD.png")
       .addFields(
