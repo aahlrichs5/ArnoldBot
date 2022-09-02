@@ -1,7 +1,7 @@
 import { Client, Intents, Message } from "discord.js";
 import fetch from "node-fetch";
-const TOKEN = require("./config.json");
-const KEYWORDS = require("./message-check.json");
+const TOKEN = require("../config.json");
+const KEYWORDS = require("../message-check.json");
 
 const bot = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],

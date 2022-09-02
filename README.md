@@ -7,10 +7,10 @@ adding new features that will be listed here when complete. The bot is currently
 
 # Commands:
 
-`/help:` states commands to be entered by users <br />
-`/hello:` the bot gives a greeting message <br />
-`/user:` gives some information about the user's discord account <br />
-`/gif { keyword }:` the bot replies with a random gif form the given keyword <br />
+`/help` states commands to be entered by users <br />
+`/hello` the bot gives a greeting message <br />
+`/gif { keyword }` the bot replies with a random gif form the given keyword <br />
+`/user` gives some information about the user's discord account <br />
 
 # Automatic Functions:
 
