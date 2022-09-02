@@ -2,7 +2,7 @@
 import { Client, Intents } from "discord.js";
 import { botInteraction } from "./slash/interaction";
 import { onReady } from "./slash/on-ready";
-const TOKEN = require("../config.json");
+const TOKEN = require("./config.json");
 const badWord = require("./bad-word.ts");
 const dadBot = require("./dad-reply.ts");
 const riotAPI = require("./riot-api.ts");

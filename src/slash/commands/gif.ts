@@ -2,7 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { Command } from "../command";
 import fetch from "node-fetch";
-const TOKEN = require("../../../config.json");
+const TOKEN = require("../../config.json");
 
 export const gifCommand: Command = {
   data: new SlashCommandBuilder()

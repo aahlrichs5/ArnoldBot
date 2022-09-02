@@ -1,0 +1,7 @@
+{
+  "guildId": "Your Guild ID Here",
+  "riotKey": "Your Riot API Key here",
+  "token": "Your Discord token here",
+  "tenorKey": "Your Tenor API Key here",
+  "tenorLimit": 50
+}

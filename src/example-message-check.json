@@ -1,0 +1,6 @@
+{
+  "dadCheck": ["Im", "I'm", "I am"],
+
+  "badWords": ["bad1", "bad2", "bad3", "bad4"],
+  "bannedWords": ["banned1", "banned2", "banned3"]
+}

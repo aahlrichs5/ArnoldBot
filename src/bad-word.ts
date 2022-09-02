@@ -1,5 +1,5 @@
 import { Client, Intents, Message } from "discord.js";
-const TOKEN = require("../config.json");
+const TOKEN = require("./config.json");
 const KEYWORDS = require("./message-check.json");
 
 const bot = new Client({
