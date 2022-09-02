@@ -11,13 +11,9 @@ export const userInfoCommand: Command = {
     await interaction.deferReply();
 
     const user = interaction.user;
+    console.log(user);
 
     const embedMessage = new MessageEmbed()
-      .setAuthor({
-        name: "ArnoldBot",
-        iconURL: "https://i.imgur.com/Dotbc16.png",
-        url: "https://github.com/aahlrichs5/ArnoldBot",
-      })
       .setColor(`#${Constants.embedColor}`)
       .setTitle(`${user.tag}`)
       .setThumbnail(`${user.avatarURL()}`)

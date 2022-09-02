@@ -47,6 +47,6 @@ async function getGifFromAPI(content: string) {
   return gifUrl[randomNum].itemurl;
 }
 
-export type GifObject = {
+type GifObject = {
   itemurl: string;
 };
