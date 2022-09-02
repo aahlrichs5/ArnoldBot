@@ -1,0 +1,36 @@
+{
+  "prodweb": "https://prodweb19-01.cartegraphoms.com/cobrakai/api/v1",
+  "gemini": "https://geminiweb.cartegraph.com/cobrakai/api/v1",
+
+  "cgHelp": "cghelp",
+  "cartegraph": "cartegraph",
+
+  "authenticate": "auth",
+
+  "getPavement": "getpavement",
+  "newPavement": "newpavement",
+  "cgPavement": "Pavement",
+  "cgPavementClass": "cgPavementClass",
+
+  "newInspection": "newinspection",
+
+  "getTask": "gettask",
+  "newTask": "newtask",
+  "cgTasks": "Task",
+  "cgTasksClass": "cgTasksClass",
+
+  "getFacilty": "getfacilty",
+  "newFacility": "newfacility",
+  "cgFacilities": "Facility",
+  "cgFacilitiesClass": "cgFacilitiesClass",
+
+  "getPond": "getpond",
+  "newPond": "newpond",
+  "cgPond": "Pond",
+  "cgPondsClass": "PondsClass",
+
+  "getSign": "getsign",
+  "newSign": "newsign",
+  "cgSigns": "Sign",
+  "cgSignsClass": "cgSignsClass"
+}
