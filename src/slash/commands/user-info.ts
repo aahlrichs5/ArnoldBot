@@ -11,7 +11,6 @@ export const userInfoCommand: Command = {
     await interaction.deferReply();
 
     const user = interaction.user;
-    console.log(user);
 
     const embedMessage = new MessageEmbed()
       .setColor(`#${Constants.embedColor}`)
