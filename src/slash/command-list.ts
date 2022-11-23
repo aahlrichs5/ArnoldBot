@@ -4,12 +4,14 @@ import { Command } from "./command";
 import { helloCommand } from "./commands/hello";
 import { helpCommand } from "./commands/help";
 import { gifCommand } from "./commands/gif";
+import { sqlCommand } from "./commands/sql";
 import { userInfoCommand } from "./commands/user-info";
 
 export const CommandList: Command[] = [
   gifCommand,
   helloCommand,
   helpCommand,
+  sqlCommand,
   userInfoCommand,
 ];
 
