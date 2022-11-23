@@ -12,16 +12,28 @@ const sqlConfig = {
 export class SqlConnection {
   constructor() {}
 
-  async testTableDescription() {
+  async exectueQuery(query: string) {
     try {
-      // make sure that any items are correctly URL encoded in the connection string
       await sql.connect(sqlConfig);
-      const result =
-        await sql.query`SELECT description FROM testTable WHERE id = 1`;
-      return result.recordset[0].description;
+      const result = await sql.query(query);
+
+      return result.recordset;
     } catch (err) {
-      // ... error checks
       console.log(err);
+      return null;
     }
+  }
+
+  async closeConnection() {
+    await sql.close();
+  }
+
+  async getDescription() {
+    const result = await this.exectueQuery(
+      "SELECT description FROM testTable WHERE id = 1"
+    );
+    return result === null
+      ? "There was an error processing the query"
+      : result[0].description;
   }
 }
