@@ -16,10 +16,12 @@ export class SqlConnection {
     try {
       await sql.connect(sqlConfig);
       const result = await sql.query(query);
+      this.closeConnection();
 
       return result.recordset;
     } catch (err) {
       console.log(err);
+      this.closeConnection();
       return null;
     }
   }
