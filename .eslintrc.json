@@ -1,26 +1,42 @@
 {
+  "parser": "@typescript-eslint/parser",
   "extends": "eslint:recommended",
   "env": {
     "node": true,
     "es6": true
   },
   "parserOptions": {
+    "sourceType": "module",
     "ecmaVersion": 2021
   },
+  "plugins": ["simple-import-sort"],
   "rules": {
     "comma-style": "warn",
     "dot-location": ["warn", "property"],
     "handle-callback-err": "off",
-    "max-nested-callbacks": ["warn", { "max": 4 }],
-    "max-statements-per-line": ["warn", { "max": 2 }],
+    "no-duplicate-imports": "error",
     "no-case-declarations": "off",
     "no-console": "off",
     "no-empty-function": "warn",
-    "no-multiple-empty-lines": ["warn", { "max": 2, "maxEOF": 1, "maxBOF": 0 }],
-    "no-var": "warn",
+    "no-multiple-empty-lines": [
+      "warn",
+      {
+        "max": 1,
+        "maxEOF": 1
+      }
+    ],
     "no-undef": "warn",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
     "prefer-const": "warn",
-    "semi": ["warn", "always"]
+    "simple-import-sort/imports": "error",
+    "spaced-comment": [
+      "error",
+      "always",
+      {
+        "markers": ["/"]
+      }
+    ],
+    "semi": ["warn", "always"],
+    "space-before-function-paren": "off"
   }
 }

@@ -1,5 +1,7 @@
-import { MessageEmbed } from "discord.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { MessageEmbed } from "discord.js";
+
+import Constants from "../../resources/constants";
 import { Command } from "../command";
 
 export const helloCommand: Command = {
@@ -12,6 +14,7 @@ export const helloCommand: Command = {
     const embedMessage = new MessageEmbed();
     embedMessage.setTitle("Hello");
     embedMessage.setDescription("Hello, I am Arnold Bot!");
+    embedMessage.setColor(`#${Constants.embedColor}`);
 
     await interaction.editReply({ embeds: [embedMessage] });
   },

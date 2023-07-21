@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Client, Intents } from "discord.js";
+
 import { botInteraction } from "./slash/interaction";
 import { onReady } from "./slash/on-ready";
 const TOKEN = require("../config.json");

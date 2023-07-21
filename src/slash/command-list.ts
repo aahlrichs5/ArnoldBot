@@ -1,9 +1,10 @@
-import { Client } from "discord.js";
 import { REST } from "@discordjs/rest";
+import { Client } from "discord.js";
+
 import { Command } from "./command";
+import { gifCommand } from "./commands/gif";
 import { helloCommand } from "./commands/hello";
 import { helpCommand } from "./commands/help";
-import { gifCommand } from "./commands/gif";
 import { userInfoCommand } from "./commands/user-info";
 
 export const CommandList: Command[] = [

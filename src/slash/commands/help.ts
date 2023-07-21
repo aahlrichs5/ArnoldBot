@@ -1,7 +1,8 @@
-import { MessageEmbed } from "discord.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Command } from "../command";
+import { MessageEmbed } from "discord.js";
+
 import Constants from "../../resources/constants";
+import { Command } from "../command";
 
 export const helpCommand: Command = {
   data: new SlashCommandBuilder()

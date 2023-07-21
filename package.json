@@ -14,7 +14,9 @@
     "url": "https://github.com/aahlrichs5/ArnoldBot/issues"
   },
   "scripts": {
-    "start": "ts-node ./src/index.ts"
+    "start": "ts-node ./src/index.ts",
+    "lint": "npx eslint src/**",
+    "lint.fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "@discordjs/builders": "^1.2.0",
@@ -24,6 +26,8 @@
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
-    "eslint": "^7.32.0"
+    "@typescript-eslint/parser": "^6.1.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0"
   }
 }

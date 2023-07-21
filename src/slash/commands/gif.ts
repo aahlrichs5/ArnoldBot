@@ -1,6 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Command } from "../command";
 import fetch from "node-fetch";
+
+import { Command } from "../command";
 const TOKEN = require("../../../config.json");
 
 export const gifCommand: Command = {

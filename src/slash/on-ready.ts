@@ -1,6 +1,7 @@
 import { REST } from "@discordjs/rest";
-import { Routes } from "discord-api-types/v9";
 import { Client, Intents } from "discord.js";
+import { Routes } from "discord-api-types/v9";
+
 import { CommandList } from "./command-list";
 const TOKEN = require("../../config.json");
 

@@ -1,4 +1,5 @@
 import { Interaction } from "discord.js";
+
 import { CommandList } from "./command-list";
 
 export const botInteraction = async (interaction: Interaction) => {

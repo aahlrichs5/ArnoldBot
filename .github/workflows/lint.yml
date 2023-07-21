@@ -1,0 +1,26 @@
+name: Lint App
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  lint-app:
+    runs-on: ubuntu-latest
+    name: Lint App
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: "Use Node 16.x"
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.20.0
+
+      - name: "Install Dependencies"
+        run: npm ci
+
+      - name: "Lint"
+        run: npm run lint
