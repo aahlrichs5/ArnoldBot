@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { MessageEmbed } from "discord.js";
 
-import Constants from "../../resources/constants";
+import Constants from "../../../resources/constants";
 import { Command } from "../command";
 
 export const userInfoCommand: Command = {
