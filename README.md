@@ -20,14 +20,14 @@ LanguageFilter: filters through a list of words that are banned and removes the 
 
 # Requirements and Setup
 
-Requirements
+## Requirements
 
 1. Use latest version of `Node.js`
 2. Create a discord bot account and save the token
 3. Create tenor developer account and save the API key
 4. Create Riot developer account and save the API key
 
-Setup
+## Setup
 
 1. Run `npm install` to install the needed packages
 2. Rename `example-config.json` to `config.json` file to root foler
