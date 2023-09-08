@@ -5,9 +5,7 @@ import Constants from "../../../resources/constants";
 import { Command } from "../command";
 
 export const helloCommand: Command = {
-  data: new SlashCommandBuilder()
-    .setName("hello")
-    .setDescription("Hello message from Arnold bot"),
+  data: new SlashCommandBuilder().setName("hello").setDescription("Hello message from Arnold bot"),
   run: async (interaction) => {
     await interaction.deferReply();
 

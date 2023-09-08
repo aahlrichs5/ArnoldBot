@@ -20,7 +20,4 @@ bot.once("ready", async () => {
 
 bot.login(TOKEN.token); // logs in with the token
 
-bot.on(
-  "interactionCreate",
-  async (interaction) => await botInteraction(interaction)
-);
+bot.on("interactionCreate", async (interaction) => await botInteraction(interaction));

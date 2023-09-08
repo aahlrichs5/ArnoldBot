@@ -5,9 +5,7 @@ import Constants from "../../../resources/constants";
 import { Command } from "../command";
 
 export const helpCommand: Command = {
-  data: new SlashCommandBuilder()
-    .setName("help")
-    .setDescription("Learn how to use Arnold Bot"),
+  data: new SlashCommandBuilder().setName("help").setDescription("Learn how to use Arnold Bot"),
   run: async (interaction) => {
     await interaction.deferReply();
 
@@ -21,7 +19,7 @@ export const helpCommand: Command = {
           name: "/gif {keyword}",
           value: "I'll send a random gif of the keyword following the command",
         },
-        { name: "/user", value: "I'll send info about your discord account" }
+        { name: "/user", value: "I'll send info about your discord account" },
       );
 
     await interaction.editReply({ embeds: [embedMessage] });

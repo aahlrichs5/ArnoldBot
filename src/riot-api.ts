@@ -23,19 +23,11 @@ bot.on("messageCreate", (message: Message) => {
     if (i === args.length - 1) summonerName += args[i].toString();
     else summonerName += args[i].toString() + " ";
   }
-  if (
-    summonerName == "" &&
-    args[0].toLocaleLowerCase() !== KEYWORDS.leagueVersion
-  )
-    return;
+  if (summonerName == "" && args[0].toLocaleLowerCase() !== KEYWORDS.leagueVersion) return;
   checkLeagueMessage(args[0].toLocaleLowerCase(), summonerName, message);
 });
 
-async function checkLeagueMessage(
-  keyword: string,
-  summonerName: string,
-  message: Message
-) {
+async function checkLeagueMessage(keyword: string, summonerName: string, message: Message) {
   switch (keyword) {
     case KEYWORDS.leagueLevel:
       await fetchSummonerLevel(summonerName, message);
@@ -59,9 +51,7 @@ async function fetchChampionID(championName: string, message: Message) {
   const gameVersion = await fetchGameVersion(message);
 
   try {
-    await fetch(
-      `http://ddragon.leagueoflegends.com/cdn/${gameVersion}/data/en_US/champion.json`
-    )
+    await fetch(`http://ddragon.leagueoflegends.com/cdn/${gameVersion}/data/en_US/champion.json`)
       .then(function (resp) {
         return resp.json();
       })
@@ -102,7 +92,7 @@ async function fetchSummonerLevel(summonerName: string, message: Message) {
   let summonerLevel;
   try {
     await fetch(
-      `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}/?api_key=${TOKEN.riotKey}`
+      `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}/?api_key=${TOKEN.riotKey}`,
     )
       .then(function (resp) {
         return resp.json();
@@ -114,9 +104,7 @@ async function fetchSummonerLevel(summonerName: string, message: Message) {
         console.log(error);
       });
     if (summonerLevel !== undefined)
-      message.channel.send(
-        `${summonerName} is level ${summonerLevel} in League of Legends.`
-      );
+      message.channel.send(`${summonerName} is level ${summonerLevel} in League of Legends.`);
     else message.channel.send("Could not find level of that summoner name.");
   } catch (error) {
     message.channel.send("Error: Cannot find level for that summoner name.");

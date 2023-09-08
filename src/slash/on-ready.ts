@@ -18,10 +18,9 @@ export const onReady = async (bot: Client) => {
   var guilds;
 
   for (const guildId of guildList) {
-    guilds = await rest.put(
-      Routes.applicationGuildCommands(bot.user?.id || "missing id", guildId),
-      { body: commandData }
-    );
+    guilds = await rest.put(Routes.applicationGuildCommands(bot.user?.id || "missing id", guildId), {
+      body: commandData,
+    });
   }
 
   console.log("Ready Slash Commands");

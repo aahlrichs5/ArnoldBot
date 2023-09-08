@@ -9,10 +9,7 @@ export const gifCommand: Command = {
     .setName("gif")
     .setDescription("Return a random gif from a given keyword")
     .addStringOption((option) =>
-      option
-        .setName("keyword")
-        .setDescription("The query for a gif search")
-        .setRequired(true)
+      option.setName("keyword").setDescription("The query for a gif search").setRequired(true),
     ),
   run: async (interaction) => {
     await interaction.deferReply();
@@ -30,9 +27,7 @@ export const gifCommand: Command = {
 async function getGifFromAPI(content: string) {
   var gifUrl: GifObject[] = [];
 
-  await fetch(
-    `https://api.tenor.com/v1/search?q=${content}&key=${TOKEN.tenorKey}&limit=${TOKEN.tenorLimit}`
-  )
+  await fetch(`https://api.tenor.com/v1/search?q=${content}&key=${TOKEN.tenorKey}&limit=${TOKEN.tenorLimit}`)
     .then(function (resp) {
       return resp.json();
     })

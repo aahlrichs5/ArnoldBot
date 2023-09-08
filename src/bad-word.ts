@@ -26,7 +26,7 @@ bot.on("messageCreate", (message: Message) => {
     if (messageString.includes(KEYWORDS.bannedWords[i])) {
       message.delete();
       message.channel.send(
-        `Sorry <@${message.author.id}>, you cant say that word here. Don't worry though, I already removed your message!`
+        `Sorry <@${message.author.id}>, you cant say that word here. Don't worry though, I already removed your message!`,
       );
     }
   }

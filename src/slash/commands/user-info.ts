@@ -5,9 +5,7 @@ import Constants from "../../../resources/constants";
 import { Command } from "../command";
 
 export const userInfoCommand: Command = {
-  data: new SlashCommandBuilder()
-    .setName("user")
-    .setDescription("Get information about your discord account"),
+  data: new SlashCommandBuilder().setName("user").setDescription("Get information about your discord account"),
   run: async (interaction) => {
     await interaction.deferReply();
 
