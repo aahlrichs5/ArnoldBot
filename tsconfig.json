@@ -4,11 +4,12 @@
     "importHelpers": true,
     "moduleResolution": "node",
     "outDir": "dist/",
+    "skipLibCheck": true,
     "sourceMap": true,
     "noImplicitAny": true,
     "strictNullChecks": false,
     "lib": ["es2018"]
   },
-  "include": ["src/*.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
