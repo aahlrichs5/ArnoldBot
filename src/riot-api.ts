@@ -1,7 +1,8 @@
 import { Client, Intents, Message } from "discord.js";
 import fetch from "node-fetch";
-const TOKEN = require("../config.json");
-const KEYWORDS = require("../message-check.json");
+require("dotenv").config();
+
+const CONFIG = require("../config.json");
 
 const bot = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
@@ -11,36 +12,36 @@ bot.once("ready", () => {
   console.log("Ready RiotAPI");
 });
 
-bot.login(TOKEN.token); // logs in with the token
+bot.login(process.env.TOKEN); // logs in with the token
 
 bot.on("messageCreate", (message: Message) => {
   if (message.author.bot) return;
-  if (message.content.indexOf(TOKEN.prefix) !== 0) return;
-  const args = message.content.substring(TOKEN.prefix.length).split(" ");
+  if (message.content.indexOf(CONFIG.prefix) !== 0) return;
+  const args = message.content.substring(CONFIG.prefix.length).split(" ");
 
   let summonerName = "";
   for (let i = 1; i < args.length; i++) {
     if (i === args.length - 1) summonerName += args[i].toString();
     else summonerName += args[i].toString() + " ";
   }
-  if (summonerName == "" && args[0].toLocaleLowerCase() !== KEYWORDS.leagueVersion) return;
+  if (summonerName == "" && args[0].toLocaleLowerCase() !== CONFIG.leagueVersion) return;
   checkLeagueMessage(args[0].toLocaleLowerCase(), summonerName, message);
 });
 
 async function checkLeagueMessage(keyword: string, summonerName: string, message: Message) {
   switch (keyword) {
-    case KEYWORDS.leagueLevel:
+    case CONFIG.leagueLevel:
       await fetchSummonerLevel(summonerName, message);
       break;
     // TODO find actual rank
     // case KEYWORDS.leagueRank:
     //   const summonerRank = await fetchRank(summonerName, message);
     //   break;
-    case KEYWORDS.leagueVersion:
+    case CONFIG.leagueVersion:
       const gameVersion = await fetchGameVersion(message);
       message.channel.send(`League of Legends is on patch ${gameVersion}`);
       break;
-    case KEYWORDS.champMastery:
+    case CONFIG.champMastery:
       const champID = await fetchChampionID(summonerName, message);
       console.log(champID);
       break;
@@ -92,7 +93,7 @@ async function fetchSummonerLevel(summonerName: string, message: Message) {
   let summonerLevel;
   try {
     await fetch(
-      `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}/?api_key=${TOKEN.riotKey}`,
+      `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}/?api_key=${CONFIG.riotKey}`,
     )
       .then(function (resp) {
         return resp.json();

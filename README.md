@@ -16,7 +16,7 @@ adding new features that will be listed here when complete. The bot is currently
 
 LanguageFilter: filters through a list of words that are banned and removes the message
 
-- List is configurable by creating `message-check.json` within the root folder and defining `badWords` and `bannedWords` arrays
+- List is configurable by creating `config.json` within the root folder and defining `badWords` and `bannedWords` arrays
 
 # Requirements and Setup
 
@@ -30,8 +30,8 @@ LanguageFilter: filters through a list of words that are banned and removes the 
 ## Setup
 
 1. Run `npm install` to install the needed packages
-2. Rename `example-config.json` to `config.json` file to root foler
-3. Edit values in `config.json` with your keys and tokens
-4. Rename `example-message-check.json` to `message-check.json`
-5. Edit values in `message-check.json` to the values that you would like to check for or words you would like moderated
+2. Rename `example-config.json` to `config.json`
+3. Edit values in `config.json` with your keys and phrases
+4. Rename `.env-example` to `.env`
+5. Edit values in `.env` with your tokens
 6. Run `npm run start` to start the bot. Console will log when specific functionality is ready to be used

@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { Client, Intents } from "discord.js";
+require("dotenv").config();
 
 import { botInteraction } from "./slash/interaction";
 import { onReady } from "./slash/on-ready";
-const TOKEN = require("../config.json");
 const badWord = require("./bad-word.ts");
 const dadBot = require("./dad-reply.ts");
 const riotAPI = require("./riot-api.ts");
@@ -18,6 +18,6 @@ bot.once("ready", async () => {
   bot.user.setActivity("with Slash Commands");
 });
 
-bot.login(TOKEN.token); // logs in with the token
+bot.login(process.env.TOKEN); // logs in with the token
 
 bot.on("interactionCreate", async (interaction) => await botInteraction(interaction));
