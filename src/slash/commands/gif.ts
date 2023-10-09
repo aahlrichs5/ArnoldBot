@@ -27,7 +27,9 @@ export const gifCommand: Command = {
 async function getGifFromAPI(content: string) {
   var gifUrl: GifObject[] = [];
 
-  await fetch(`https://api.tenor.com/v1/search?q=${content}&key=${TOKEN.tenorKey}&limit=${TOKEN.tenorLimit}`)
+  await fetch(
+    `https://api.tenor.com/v1/search?q=${content}&key=${process.env.TENORKEY}&limit=${process.env.TENORLIMIT}`,
+  )
     .then(function (resp) {
       return resp.json();
     })
